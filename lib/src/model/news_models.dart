@@ -70,6 +70,14 @@ class Article {
         "publishedAt": publishedAt.toIso8601String(),
         "content": content == null ? null : content,
     };
+
+    getImageToUrl(){
+    if (urlToImage == null){
+      return 'https://www.fabricocina.com/wp-content/uploads/2018/06/image_large.png';
+    }else{
+      return urlToImage;
+    }
+  }
 }
 
 class Source {
@@ -90,4 +98,7 @@ class Source {
         "id": id == null ? null : id,
         "name": name,
     };
+  
 }
+
+

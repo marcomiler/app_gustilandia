@@ -1,6 +1,8 @@
-import 'package:app_gustilandia/src/pages/tab_home.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
 import 'package:provider/provider.dart';
+import 'package:app_gustilandia/src/pages/tab_home.dart';
 
 class TabsPage extends StatelessWidget {
 
@@ -29,9 +31,9 @@ class _Navegacion extends StatelessWidget {
       currentIndex: navegacionModel.currentPage,
       onTap: (i) => navegacionModel.currentPage = i,
       items: [
-        BottomNavigationBarItem(icon: Icon(Icons.home_outlined), label: 'Home'),
-        BottomNavigationBarItem(icon: Icon(Icons.shopping_cart_outlined), label: 'Go to Cart'),
-        BottomNavigationBarItem(icon: Icon(Icons.person_outline), label: 'Profile')
+        BottomNavigationBarItem(icon: Icon(FontAwesomeIcons.home), label: 'Home'),
+        BottomNavigationBarItem(icon: Icon(FontAwesomeIcons.shoppingCart), label: 'Go to Cart'),
+        BottomNavigationBarItem(icon: Icon(FontAwesomeIcons.userAlt), label: 'Profile')
       ],
     );
   }
