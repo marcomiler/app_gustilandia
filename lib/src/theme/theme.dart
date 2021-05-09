@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
-final mytheme = ThemeData.light().copyWith(
-  accentColor: Colors.white54
+final mytheme = ThemeData.dark().copyWith(
+  backgroundColor: Colors.white
+  //splashColor : Colors.redAccent.shade100,
 );

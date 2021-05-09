@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:provider/provider.dart';
-import 'package:app_gustilandia/src/pages/tab_home.dart';
+import 'package:app_gustilandia/src/pages/tab_store.dart';
 
 class TabsPage extends StatelessWidget {
 
@@ -28,12 +28,19 @@ class _Navegacion extends StatelessWidget {
     final navegacionModel = Provider.of<_NavegacionModel>(context);
 
     return BottomNavigationBar(
+      iconSize: 20,
+      elevation: 6,
+      selectedFontSize: 15.0,
+      backgroundColor: Colors.redAccent.shade100,
+      fixedColor: Colors.white,
+      unselectedItemColor: Colors.white60,
+      selectedLabelStyle: TextStyle(fontWeight: FontWeight.bold),
       currentIndex: navegacionModel.currentPage,
       onTap: (i) => navegacionModel.currentPage = i,
       items: [
-        BottomNavigationBarItem(icon: Icon(FontAwesomeIcons.home), label: 'Home'),
-        BottomNavigationBarItem(icon: Icon(FontAwesomeIcons.shoppingCart), label: 'Go to Cart'),
-        BottomNavigationBarItem(icon: Icon(FontAwesomeIcons.userAlt), label: 'Profile')
+        BottomNavigationBarItem(icon: Icon(FontAwesomeIcons.store), label: 'Comprar',),
+        BottomNavigationBarItem(icon: Icon(FontAwesomeIcons.shoppingCart,  size: 22,), label: 'Carrito'),
+        BottomNavigationBarItem(icon: Icon(FontAwesomeIcons.userAlt), label: 'Mi cuenta')
       ],
     );
   }
@@ -53,7 +60,7 @@ class _Paginas extends StatelessWidget {
         // physics: BouncingScrollPhysics(),
         physics: NeverScrollableScrollPhysics(),
         children: <Widget>[
-          TabHome(),
+          TabStore(),
           Container( 
             color: Colors.green
           ),

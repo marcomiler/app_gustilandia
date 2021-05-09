@@ -1,4 +1,5 @@
 import 'package:app_gustilandia/src/model/news_models.dart';
+import 'package:app_gustilandia/src/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
  
@@ -11,6 +12,7 @@ class DetailsProduct extends StatelessWidget {
 
       return SafeArea(
         child: Scaffold(
+          backgroundColor: mytheme.backgroundColor,
           body: CustomScrollView(
             slivers: <Widget>[
               _crearAppBar(articulo),
@@ -24,16 +26,19 @@ class DetailsProduct extends StatelessWidget {
               ), 
             ],
         ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         floatingActionButton:  FloatingActionButton.extended(
+          isExtended: true,
             hoverColor: Colors.red,
-            icon: Icon(FontAwesomeIcons.shoppingCart),
+            icon: Icon(FontAwesomeIcons.shoppingCart, color: Colors.white,),
             elevation: 7,
-            label: Text('Agregar al Carrito'),
+            label: Text('Agregar al Carrito', style: TextStyle(color: Colors.white),),
             backgroundColor: Colors.redAccent,
             onPressed: (){},
-          ),
-    ),
-      );
+        ),
+          
+      )
+    );
   }
 }
 
@@ -42,20 +47,21 @@ Widget _crearAppBar(Article article){
   return SliverAppBar(
     elevation: 2.0,
     backgroundColor: Colors.indigoAccent,
-    expandedHeight: 200.0,
+    expandedHeight: 300.0,
     floating: false,
     pinned: true,
     flexibleSpace: FlexibleSpaceBar(
       centerTitle: true,
       title: Text(
-        article.title,
+        'Aqui irá el titulo del producto',
         style: TextStyle(color: Colors.white, fontSize: 16.0)
       ),
       background: FadeInImage(
         placeholder: AssetImage('assets/images/loading.gif'),
         image: NetworkImage(article.getImageToUrl()),
         //fadeInDuration: Duration(milliseconds: 150),
-        fit: BoxFit.cover
+        fit: BoxFit.cover,
+        fadeInCurve: Curves.easeInToLinear,
       ),
     ),
 
@@ -73,11 +79,12 @@ Widget _details() {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Text('Acerca del producto: ',
-        textAlign: TextAlign.start,
-        style: TextStyle(
-            fontSize: 25.0,
-            fontWeight: FontWeight.w300
-         ),
+          textAlign: TextAlign.start,
+          style: TextStyle(
+            color: Colors.black38,
+              fontSize: 30.0,
+              fontWeight: FontWeight.bold
+          ),
         ),
         SizedBox(height: 10.0,),
         Text(
@@ -88,8 +95,30 @@ Widget _details() {
             color: Colors.grey
           ),
         ),
+        Divider(),
         SizedBox(height: 20,),
-        Text('Precio:  S/.$precio', style: TextStyle(fontSize: 30),)
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[ 
+            Text(
+            'S/ $precio', 
+              style: TextStyle(
+                fontSize: 30, 
+                color: Colors.red, 
+                fontWeight: FontWeight.bold
+              ),
+            ),
+            Text(
+              'U. MED: CAJA',
+              style: TextStyle(
+                fontSize: 20, 
+                color: Colors.black45, 
+                fontWeight: FontWeight.normal
+              ),
+            ),
+          ]
+        ),
+      SizedBox(height: 25.0,)
       ],
     ),
   );

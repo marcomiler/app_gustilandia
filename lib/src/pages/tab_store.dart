@@ -1,16 +1,19 @@
 import 'package:app_gustilandia/src/model/category.model.dart';
 import 'package:app_gustilandia/src/services/news_service.dart';
+import 'package:app_gustilandia/src/theme/theme.dart';
 import 'package:app_gustilandia/src/widget/list_news.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class TabHome extends StatefulWidget {
+class TabStore extends StatefulWidget {
+
+  
 
   @override
-  _TabHomeState createState() => _TabHomeState();
+  _TabTabStoreState createState() => _TabTabStoreState();
 }
 
-class _TabHomeState extends State<TabHome> with AutomaticKeepAliveClientMixin{
+class _TabTabStoreState extends State<TabStore> with AutomaticKeepAliveClientMixin{
   @override
   Widget build(BuildContext context) {
 
@@ -18,7 +21,8 @@ class _TabHomeState extends State<TabHome> with AutomaticKeepAliveClientMixin{
 
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Color(0XF9F9F9F9),
+        //backgroundColor: Colors.white,
+        backgroundColor: mytheme.backgroundColor,
           body : Column(
             children: <Widget>[
             _ListaCategorias(),
@@ -35,7 +39,7 @@ class _TabHomeState extends State<TabHome> with AutomaticKeepAliveClientMixin{
               ),
             )
           ]
-        )
+          )
       ),
     );
   }
@@ -49,12 +53,17 @@ class _ListaCategorias extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
+    final newsService = Provider.of<NewsService>(context);
+
     final categories = Provider.of<NewsService>(context).categories;
+    final _color = Colors.white38;
 
     return Container(
+      decoration: BoxDecoration(
+        color: _color,
+      ),
       width: double.infinity,
       height: 80,
-      color: Colors.blue,
       child: ListView.builder(
         physics: BouncingScrollPhysics(),
         scrollDirection: Axis.horizontal,
@@ -70,7 +79,15 @@ class _ListaCategorias extends StatelessWidget {
               children: <Widget>[
                 _CategoryButton(categories[index]),
                 SizedBox(height: 5,),
-                Text('${cName[0].toUpperCase()}${cName.substring(1)}')
+                Text(
+                  '${cName[0].toUpperCase()}${cName.substring(1)}',
+                  style: TextStyle(
+                    color: Colors.redAccent.shade200,
+                    fontWeight: newsService.selectedCategory == categories[index].name
+                    ? FontWeight.bold
+                    : FontWeight.normal
+                  ),
+                )
               ],
             ),
           );
@@ -102,13 +119,18 @@ class _CategoryButton extends StatelessWidget{
         margin: EdgeInsets.symmetric(horizontal: 10.0),
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          color: Colors.white
+          color: (newsService.selectedCategory == this.category.name)
+          ? Colors.redAccent.shade200
+          : Colors.redAccent.shade100,
         ),
         child: Icon(
           category.icon,
           color: (newsService.selectedCategory == this.category.name)
-          ? Colors.red
-          : Colors.black38
+          ? Colors.white
+          : Colors.white60,
+          size: (newsService.selectedCategory == this.category.name)
+          ? 26
+          : 18
         ),
       ),
     );

@@ -1,4 +1,3 @@
-import 'package:app_gustilandia/src/pages/tab_home.dart';
 import 'package:app_gustilandia/src/pages/tabs_page.dart';
 import 'package:app_gustilandia/src/routes/routes.dart';
 import 'package:app_gustilandia/src/services/news_service.dart';
@@ -11,7 +10,6 @@ void main() {
 
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
     statusBarColor: Colors.transparent,
-    statusBarBrightness: Brightness.light
   ));
 
   runApp(MyApp());
