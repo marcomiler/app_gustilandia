@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
 import 'package:provider/provider.dart';
+
 import 'package:app_gustilandia/src/pages/tab_store.dart';
+import 'package:app_gustilandia/src/pages/tab_shop.dart';
+import 'package:app_gustilandia/src/pages/tab_profile.dart';
+
 
 class TabsPage extends StatelessWidget {
 
@@ -40,7 +43,7 @@ class _Navegacion extends StatelessWidget {
       items: [
         BottomNavigationBarItem(icon: Icon(FontAwesomeIcons.store), label: 'Comprar',),
         BottomNavigationBarItem(icon: Icon(FontAwesomeIcons.shoppingCart,  size: 22,), label: 'Carrito'),
-        BottomNavigationBarItem(icon: Icon(FontAwesomeIcons.userAlt), label: 'Mi cuenta')
+        BottomNavigationBarItem(icon: Icon(FontAwesomeIcons.userAlt), label: 'Perfil')
       ],
     );
   }
@@ -61,12 +64,8 @@ class _Paginas extends StatelessWidget {
         physics: NeverScrollableScrollPhysics(),
         children: <Widget>[
           TabStore(),
-          Container( 
-            color: Colors.green
-          ),
-          Container( 
-            color: Colors.grey
-          )
+          TabShop(),
+          TabProfile()
         ],
     );
   }

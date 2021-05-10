@@ -18,7 +18,7 @@ class NewsResponse {
     factory NewsResponse.fromJson(Map<String, dynamic> json) => NewsResponse(
         status: json["status"],
         totalResults: json["totalResults"],
-        articles: List<Article>.from(json["articles"].map((x) => Article.fromJson(x))),
+        articles: json["articles"] != null ? List<Article>.from(json["articles"].map((x) => Article.fromJson(x))) : [],
     );
 
     Map<String, dynamic> toJson() => {

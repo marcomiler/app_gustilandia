@@ -7,8 +7,6 @@ import 'package:provider/provider.dart';
 
 class TabStore extends StatefulWidget {
 
-  
-
   @override
   _TabTabStoreState createState() => _TabTabStoreState();
 }
@@ -21,7 +19,18 @@ class _TabTabStoreState extends State<TabStore> with AutomaticKeepAliveClientMix
 
     return SafeArea(
       child: Scaffold(
-        //backgroundColor: Colors.white,
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          elevation: 7,
+          centerTitle: true,
+          title: Text(
+            'Productos',
+            style: TextStyle(
+              color: Colors.redAccent.shade200,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
         backgroundColor: mytheme.backgroundColor,
           body : Column(
             children: <Widget>[
