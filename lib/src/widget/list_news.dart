@@ -90,9 +90,9 @@ Widget _showActhor(Article noticia){
       'S/ 15.0', 
       maxLines: 2,
       style: TextStyle(
-        fontWeight: FontWeight.w500,
+        fontWeight: FontWeight.bold,
         fontSize: 30,
-        color: Colors.red
+        color: Colors.blue
       ),
     );
   }else{

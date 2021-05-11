@@ -1,9 +1,11 @@
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
 import 'package:app_gustilandia/src/model/category.model.dart';
+import 'package:app_gustilandia/src/search/search_delegate.dart';
 import 'package:app_gustilandia/src/services/news_service.dart';
 import 'package:app_gustilandia/src/theme/theme.dart';
 import 'package:app_gustilandia/src/widget/list_news.dart';
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class TabStore extends StatefulWidget {
 
@@ -21,26 +23,35 @@ class _TabTabStoreState extends State<TabStore> with AutomaticKeepAliveClientMix
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,
-          elevation: 7,
+          elevation: 7, 
           centerTitle: true,
-          title: Text(
+          title:Text(
             'Productos',
             style: TextStyle(
               color: Colors.redAccent.shade200,
               fontWeight: FontWeight.bold,
+              fontSize: 22.0,
             ),
           ),
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(Icons.search, color: Colors.redAccent.shade200,),
+              onPressed: (){
+                showSearch(
+                  context: context,
+                  delegate: DataSearch(),
+                );
+              }
+            ),
+          ],   
         ),
-        backgroundColor: mytheme.backgroundColor,
-          body : Column(
+        body : Column(
             children: <Widget>[
             _ListaCategorias(),
-
             if(!newsService.isLoading)
               Expanded(
                 child: ListNews(newsService.getArticleCategorySelected),
-              ),
-            
+              ),         
             if(newsService.isLoading)
             Expanded( 
               child: Center(
@@ -48,7 +59,7 @@ class _TabTabStoreState extends State<TabStore> with AutomaticKeepAliveClientMix
               ),
             )
           ]
-          )
+          ),
       ),
     );
   }

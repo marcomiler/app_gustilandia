@@ -28,6 +28,19 @@ class NewsResponse {
     };
 }
 
+class Articles{
+  List<Article> items = [];
+  Articles();
+
+  Articles.fromJsonList(List<dynamic> jsonList){
+      if(jsonList == null) return;
+      for(var item in jsonList){
+        final article = new Article.fromJson(item);
+        items.add(article);
+      }
+    }
+}
+
 class Article {
     Article({
         this.source,
@@ -39,6 +52,8 @@ class Article {
         this.publishedAt,
         this.content,
     });
+
+    String uniqueId;//creamos esta variable para luego evitar errores en algunas funciones
 
     Source source;
     String author;
@@ -70,6 +85,14 @@ class Article {
         "publishedAt": publishedAt.toIso8601String(),
         "content": content == null ? null : content,
     };
+
+    getTitle(){
+      if (title == null){
+      return 'No hay titulo';
+    }else{
+      return title;
+    }
+    }
 
     getImageToUrl(){
     if (urlToImage == null){
