@@ -1,6 +1,7 @@
 import 'package:app_gustilandia/src/model/news_models.dart';
 import 'package:app_gustilandia/src/services/news_service.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class DataSearch extends SearchDelegate{
 
@@ -12,7 +13,7 @@ class DataSearch extends SearchDelegate{
       // Acciones del AppBar
       return [
         IconButton(
-          icon: Icon(Icons.clear),
+          icon: Icon(FontAwesomeIcons.times, color: Colors.redAccent.shade100),
           onPressed: (){query = '' ;},
         )
       ];
@@ -22,9 +23,9 @@ class DataSearch extends SearchDelegate{
     Widget buildLeading(BuildContext context) {
       // Icono para volver
       return IconButton(
-        icon: AnimatedIcon(
-          icon: AnimatedIcons.menu_arrow,
-          progress: transitionAnimation,
+        icon: Icon(
+          FontAwesomeIcons.arrowLeft,
+          color: Colors.redAccent.shade100
         ),
         onPressed: (){
           close(context, null);//retorna a la pantalla anterior y no devuelve nda en este caso
@@ -47,7 +48,7 @@ class DataSearch extends SearchDelegate{
   
     @override
     Widget buildSuggestions(BuildContext context) {
-    // TSugerencias que apareceran cuando el usuario busque un producto
+    // Sugerencias que apareceran cuando el usuario busque un producto
 
     if(query.isEmpty){return Container();}
     return FutureBuilder(
@@ -73,7 +74,7 @@ class DataSearch extends SearchDelegate{
                   ),
                 ),
                 title: Text('aqui va el titulo de la pelicula', style: TextStyle(color: Colors.black),),
-                subtitle: Text('Aqui va el subtiulo',style: TextStyle(color: Colors.black26),),
+                subtitle: Text('Aqui va el subtitulo',style: TextStyle(color: Colors.black26),),
                 onTap: (){
                   close(context, null);//cierro la busqueda
                   article.uniqueId = '';
@@ -84,11 +85,24 @@ class DataSearch extends SearchDelegate{
           );
         }else{
           return Center( 
-            child: CircularProgressIndicator(),
+            child: CircularProgressIndicator(
+              valueColor: AlwaysStoppedAnimation<Color> (Colors.red),
+              strokeWidth: 6.0,
+            ),
           );
         } 
       }
     );
   }
+
+  @override
+  String get searchFieldLabel => 'Buscar un producto';
+
+  @override
+  InputDecorationTheme get searchFieldDecorationTheme => InputDecorationTheme(
+    hintStyle: TextStyle(color: Color(0XFF4a503d)),
+    border: InputBorder.none,
+    helperMaxLines: 1,
+  );
 
 }

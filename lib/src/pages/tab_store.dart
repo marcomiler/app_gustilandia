@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
 import 'package:app_gustilandia/src/model/category.model.dart';
 import 'package:app_gustilandia/src/search/search_delegate.dart';
 import 'package:app_gustilandia/src/services/news_service.dart';
-import 'package:app_gustilandia/src/theme/theme.dart';
+//import 'package:app_gustilandia/src/theme/theme.dart';
 import 'package:app_gustilandia/src/widget/list_news.dart';
 
 class TabStore extends StatefulWidget {
@@ -35,7 +36,11 @@ class _TabTabStoreState extends State<TabStore> with AutomaticKeepAliveClientMix
           ),
           actions: <Widget>[
             IconButton(
-              icon: Icon(Icons.search, color: Colors.redAccent.shade200,),
+              icon: Icon(
+                FontAwesomeIcons.search, 
+                color: Colors.redAccent.shade100,
+                size: 20.0,
+              ),
               onPressed: (){
                 showSearch(
                   context: context,

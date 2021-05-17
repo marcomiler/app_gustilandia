@@ -6,7 +6,6 @@ final mytheme = ThemeData(
    fontFamily: 'Monserrat',
 
 );
-// .dark().copyWith(
- 
-//   //splashColor : Colors.redAccent.shade100,
-// );
+// colores a usar en la app:
+// Colors.redAccent.shade100;
+// Color(0XFFe28f83)

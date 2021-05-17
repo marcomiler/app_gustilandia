@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
+import 'package:app_gustilandia/src/widget/list_perfil.dart';
+
 class TabProfile extends StatelessWidget {
-  const TabProfile({Key key}) : super(key: key);
+  TabProfile();
 
   @override
   Widget build(BuildContext context) {
@@ -30,13 +32,13 @@ class TabProfile extends StatelessWidget {
                   Container( 
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: Colors.green
+                      color: Color(0XFF4a503d)
                     ),
                     child: Padding( 
                       padding: EdgeInsets.all(4.0),
-                      child: CircleAvatar(
-                        backgroundColor: Colors.grey,
-                        radius: 50,
+                      child: ClipRRect(
+                        child: Image.asset('assets/images/no-avatar.jpg', fit: BoxFit.contain, width: 100, height: 100,),
+                        borderRadius: BorderRadius.circular(50),
                       ),
                     ),
                   ),
@@ -52,11 +54,10 @@ class TabProfile extends StatelessWidget {
                 ],
               ) 
             ),
+            SizedBox(height: 25.0),
             Expanded(
               flex: 2,
-              child: Container(
-                color: Colors.red
-              )
+              child: ListPerfil(),
             )
           ],
         ),

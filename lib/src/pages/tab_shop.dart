@@ -99,7 +99,7 @@ class _FullCart extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            'S/ 85.00',
+                            'S/ 00.00',
                             style: TextStyle(
                               color: Colors.black,
                               fontSize: 25,
@@ -174,7 +174,7 @@ class _ShoopingCartProduct extends StatelessWidget {
                           padding: EdgeInsets.all(10.0),
                           child: Image.asset(
                             'assets/images/no-avatar.jpg',
-                            fit: BoxFit.fill
+                            fit: BoxFit.contain
                           ),
                         ),
                       ),
@@ -186,12 +186,12 @@ class _ShoopingCartProduct extends StatelessWidget {
                     child: Column(
                       children: <Widget>[
                         Text(
-                          article.title,
+                          'Contrary to popular belief, Lorem Ipsum',
                           overflow: TextOverflow.ellipsis,
                         ),
                         SizedBox(height: 10.0,),
                         Text(
-                          article.description,
+                          'is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s',
                           style: TextStyle(
                             color: Colors.grey,
                           ),
@@ -234,7 +234,7 @@ class _ShoopingCartProduct extends StatelessWidget {
                               ), 
                               Spacer(),
                               Text(
-                                'S/ 15',
+                                'S/ 00',
                                 style: TextStyle(  
                                   color: Colors.blue,
                                   fontSize: 25,
