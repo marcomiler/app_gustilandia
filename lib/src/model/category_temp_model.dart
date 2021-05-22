@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
-class Category{
+class CategoryTempModel{
+
+  int id;
   final IconData icon;
   final String name;
 
-  Category(this.icon, this.name);
+  CategoryTempModel(this.id, this.icon, this.name);
 
 }

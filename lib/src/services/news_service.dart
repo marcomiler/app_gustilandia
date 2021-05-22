@@ -1,8 +1,8 @@
 import 'dart:convert';
-
-import 'package:app_gustilandia/src/model/category.model.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+
+import 'package:app_gustilandia/src/model/category_temp_model.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:app_gustilandia/src/model/news_models.dart';
@@ -17,14 +17,14 @@ class NewsService with ChangeNotifier{
 
   bool _isLoading = true;
   
-  List<Category> categories = [
-    Category(FontAwesomeIcons.birthdayCake, 'business'),
-    Category(FontAwesomeIcons.candyCane, 'entertainment'),
-    Category(FontAwesomeIcons.hamburger, 'general'),
-    Category(FontAwesomeIcons.cookie, 'health'),
-    Category(FontAwesomeIcons.piedPiper, 'science'),
-    Category(FontAwesomeIcons.gifts, 'sports'),
-    Category(FontAwesomeIcons.cheese, 'technology'),
+  List<CategoryTempModel> categories = [
+    CategoryTempModel(1,FontAwesomeIcons.birthdayCake, 'business'),
+    CategoryTempModel(2,FontAwesomeIcons.candyCane, 'entertainment'),
+    CategoryTempModel(3,FontAwesomeIcons.hamburger, 'general'),
+    CategoryTempModel(4,FontAwesomeIcons.cookie, 'health'),
+    CategoryTempModel(5,FontAwesomeIcons.piedPiper, 'science'),
+    CategoryTempModel(6,FontAwesomeIcons.gifts, 'sports'),
+    CategoryTempModel(7,FontAwesomeIcons.cheese, 'technology'),
   ];
 
   Map<String, List<Article>> categoryArticle = {};
