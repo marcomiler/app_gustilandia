@@ -1,6 +1,5 @@
 import 'package:app_gustilandia/src/pages/tabs_page.dart';
 import 'package:app_gustilandia/src/routes/routes.dart';
-import 'package:app_gustilandia/src/services/news_service.dart';
 import 'package:app_gustilandia/src/services/producto_service.dart';
 import 'package:app_gustilandia/src/theme/theme.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +22,6 @@ class MyApp extends StatelessWidget {
     
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => NewsService(),),
         ChangeNotifierProvider(create: (_) => ProductoService(),)
       ],
       child: MaterialApp(

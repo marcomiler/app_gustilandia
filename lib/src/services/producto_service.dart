@@ -1,19 +1,17 @@
 import 'dart:convert';
 
-//import 'package:app_gustilandia/src/model/producto_model_temp.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:app_gustilandia/src/model/category_temp_model.dart';
-//import 'package:app_gustilandia/src/model/categoria_model.dart';
 import 'package:app_gustilandia/src/model/producto_model.dart';
 
 final _URL_GUSTILANDIA = 'http://192.168.0.106:8085/backendgusti';
 
 class ProductoService with ChangeNotifier{
 
-  List<Producto> productos = [];
+  //List<Producto> productos = [];
   String _selectedCategory = 'galleta rellena';
 
   bool _islLoading = true;
@@ -34,9 +32,6 @@ class ProductoService with ChangeNotifier{
   Map<String, List<Producto>> categoryProducto = {};
 
   ProductoService(){
-
-    //this.getProducts();
-
     categories.forEach((item) {
       this.categoryProducto[item.name] = [];
     });
@@ -55,19 +50,24 @@ class ProductoService with ChangeNotifier{
     notifyListeners();
   }
 
-  // getProducts() async {
-
-  //   final url = '$_URL_GUSTILANDIA/producto';
-  //   final resp = await http.get(Uri.parse(url));
-
-  //   final prodResponse = productoResponseFromJson(resp.body);
-
-  //   this.productos.addAll(prodResponse.result);
-  //   notifyListeners();
-
-  // }
-
   List<Producto> get getProductsCategorySelected => this.categoryProducto[this.selectedCategory];
+
+  List<Producto> _processList(http.Response resp){
+    final List<Producto> productos = [];
+     if(resp.statusCode == 200){
+
+      String body = utf8.decode(resp.bodyBytes);
+      final decodedData = json.decode(body); 
+
+      if(decodedData == null) return [];
+      //print(decodedData);
+
+      for(var item in decodedData){
+        productos.add(Producto.fromJson(item));
+      }
+     }
+     return productos;
+  }
 
   getProductsByCategory(String categoria) async {
 
@@ -82,24 +82,19 @@ class ProductoService with ChangeNotifier{
 
     final url = '$_URL_GUSTILANDIA/producto/listProductsByCategory/$id';
     final resp = await http.get(Uri.parse(url));
-    
-    final List<Producto> productos = [];
-    //String body = utf8.decode(resp.bodyBytes);
-    
-    if(resp.statusCode == 200){
-      final decodedData = json.decode(resp.body); 
 
-      if(decodedData == null) return [];
+    this.categoryProducto[categoria].addAll(_processList(resp));
 
-      print(decodedData);
-
-      for(var item in decodedData){
-        productos.add(Producto.fromJson(item));
-      }
-    this.categoryProducto[categoria].addAll(productos);
-
-    }
     this._islLoading = false;
     notifyListeners();
-    }  
+
+  }  
+
+  Future<List<Producto>> searchProducts(String query) async{
+
+    final url = '$_URL_GUSTILANDIA/producto/listProductsByName/$query';
+    final resp = await http.get(Uri.parse(url));
+    return _processList(resp);
+
+  }
 }

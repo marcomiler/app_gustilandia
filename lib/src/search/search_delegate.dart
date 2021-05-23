@@ -1,12 +1,13 @@
-import 'package:app_gustilandia/src/model/news_models.dart';
-import 'package:app_gustilandia/src/services/news_service.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+import 'package:app_gustilandia/src/model/producto_model.dart';
+import 'package:app_gustilandia/src/services/producto_service.dart';
 
 class DataSearch extends SearchDelegate{
 
   String selection;
-  final newsService = new NewsService();
+  final productoService = new ProductoService();
 
   @override
   List<Widget> buildActions(BuildContext context) {
@@ -52,33 +53,38 @@ class DataSearch extends SearchDelegate{
 
     if(query.isEmpty){return Container();}
     return FutureBuilder(
-      future: newsService.searchArticles(query),
-      builder: (BuildContext context, AsyncSnapshot<List<Article>> snapshot){
+      // future: newsService.searchArticles(query),
+      future: productoService.searchProducts(query),
+      builder: (BuildContext context, AsyncSnapshot<List<Producto>> snapshot){
         if(snapshot.hasData){
-          final articles = snapshot.data;
+          final productos = snapshot.data;
           return ListView(
-            children: articles.map((article) {
+            children: productos.map((producto) {
+              producto.uniqueId = '${producto.idProducto}-search';
               return ListTile(
                 leading: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(5.0)
                   ),
-                  child: FadeInImage( 
-                    fadeInDuration: Duration(milliseconds: 300),
-                    fadeInCurve: Curves.easeInToLinear,
-                    image: NetworkImage(article.getImageToUrl()),
-                    placeholder: AssetImage('assets/images/no-image.jpg'),
-                    width: 50.0,
-                    height: 80.0,
-                    fit: BoxFit.cover,
+                  child: Hero(
+                    tag: producto.uniqueId,
+                    child: FadeInImage( 
+                      fadeInDuration: Duration(milliseconds: 300),
+                      fadeInCurve: Curves.easeInToLinear,
+                      image: NetworkImage(producto.getImagen(producto.imagen)),
+                      placeholder: AssetImage('assets/images/no-image.jpg'),
+                      width: 50.0,
+                      height: 80.0,
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
-                title: Text('aqui va el titulo de la pelicula', style: TextStyle(color: Colors.black),),
-                subtitle: Text('Aqui va el subtitulo',style: TextStyle(color: Colors.black26),),
+                title: Text(producto.nameProduct, style: TextStyle(color: Colors.black),),
+                subtitle: Text(producto.descripcion,style: TextStyle(color: Colors.black26), overflow: TextOverflow.ellipsis, maxLines: 1,),
                 onTap: (){
                   close(context, null);//cierro la busqueda
-                  article.uniqueId = '';
-                  Navigator.pushNamed(context, 'details', arguments: article);
+                  producto.uniqueId = '';
+                  Navigator.pushNamed(context, 'details', arguments: producto);
                 },
               );
             }).toList(),

@@ -1,7 +1,8 @@
-import 'package:app_gustilandia/src/model/news_models.dart';
-import 'package:app_gustilandia/src/services/news_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import 'package:app_gustilandia/src/model/producto_model.dart';
+import 'package:app_gustilandia/src/services/producto_service.dart';
 
 class TabShop extends StatelessWidget {
 
@@ -23,7 +24,7 @@ class TabShop extends StatelessWidget {
             ),
           ),
         ),
-        body: _EmptyCart(),
+        body: _FullCart(),
         // body: _FullCart(),
       ),
     );
@@ -37,7 +38,7 @@ class _FullCart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    final newsService = Provider.of<NewsService>(context);
+    final productoService = Provider.of<ProductoService>(context);
 
     return Container(
       color: Colors.white,
@@ -51,11 +52,11 @@ class _FullCart extends StatelessWidget {
               child: ListView.builder(
                 itemExtent: 230,
                 scrollDirection: Axis.horizontal,
-                itemCount: newsService.headlines.length,
+                itemCount: 3,
                 itemBuilder: (context, index){
-                  final article = newsService.headlines[index];
+                  final producto = productoService.searchProducts("");
                   return _ShoopingCartProduct(
-                    article: article,
+                    producto: new Producto(),//enviar parametro de productos
                   );
                 },
               ),
@@ -147,9 +148,9 @@ class _FullCart extends StatelessWidget {
 class _ShoopingCartProduct extends StatelessWidget {
 
   
-  _ShoopingCartProduct({Key key, this.article}) : super(key: key);
+  _ShoopingCartProduct({Key key, this.producto}) : super(key: key);
 
-  final Article article;
+  final Producto producto;
 
   @override
   Widget build(BuildContext context) {

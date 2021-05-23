@@ -1,5 +1,4 @@
-import 'package:app_gustilandia/src/model/news_models.dart';
-import 'package:app_gustilandia/src/theme/theme.dart';
+import 'package:app_gustilandia/src/model/producto_model.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
  
@@ -8,18 +7,18 @@ class DetailsProduct extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-      final Article articulo = ModalRoute.of(context).settings.arguments;
+      final Producto producto  = ModalRoute.of(context).settings.arguments;
 
       return SafeArea(
         child: Scaffold(
-          backgroundColor: mytheme.backgroundColor,
+           backgroundColor: Color(0XFFF2F4F4),
           body: CustomScrollView(
             slivers: <Widget>[
-              _crearAppBar(articulo),
+              _crearAppBar(producto),
               SliverList(
                 delegate: SliverChildListDelegate(
                   [
-                    _details(),
+                    _details(producto),
                     SizedBox(height: 15,),
                   ]
                 )
@@ -42,26 +41,32 @@ class DetailsProduct extends StatelessWidget {
   }
 }
 
-Widget _crearAppBar(Article article){
+Widget _crearAppBar(Producto producto){
 
   return SliverAppBar(
-    elevation: 2.0,
+    iconTheme: IconThemeData(
+      color: Colors.black //darle color a los iconos del sliveAppBar
+    ),
+    elevation: 7.0,
     backgroundColor: Colors.indigoAccent,
-    expandedHeight: 300.0,
+    expandedHeight: 250.0,//ver opcion de aumentar a 300
     floating: false,
     pinned: true,
     flexibleSpace: FlexibleSpaceBar(
       centerTitle: true,
       title: Text(
-        'Aqui irá el titulo del producto',
-        style: TextStyle(color: Colors.white, fontSize: 16.0)
+        producto.nameProduct,
+        style: TextStyle(color: Colors.redAccent.shade200, fontSize: 16.0, fontWeight: FontWeight.bold)
       ),
-      background: FadeInImage(
-        placeholder: AssetImage('assets/images/loading.gif'),
-        image: NetworkImage(article.getImageToUrl()),
-        //fadeInDuration: Duration(milliseconds: 150),
-        fit: BoxFit.cover,
-        fadeInCurve: Curves.easeInToLinear,
+      background: Hero(
+        tag: producto.uniqueId,
+        child: FadeInImage(
+          placeholder: AssetImage('assets/images/loading.gif'),
+          image: NetworkImage(producto.getImagen(producto.imagen)),
+          //fadeInDuration: Duration(milliseconds: 150),
+          fit: BoxFit.cover,
+          fadeInCurve: Curves.easeInToLinear,
+        ),
       ),
     ),
 
@@ -69,58 +74,125 @@ Widget _crearAppBar(Article article){
 
 }
 
-Widget _details() {
-
-  final precio= 15;
-  final lorem = 'It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.';
+Widget _details(Producto producto) {
+  
   return Container(
-    margin: EdgeInsets.all(10),
+    margin: EdgeInsets.all(15),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Text('Acerca del producto: ',
           textAlign: TextAlign.start,
           style: TextStyle(
-            color: Colors.black38,
+            color: Colors.black87,
               fontSize: 30.0,
               fontWeight: FontWeight.bold
           ),
         ),
         SizedBox(height: 10.0,),
         Text(
-          lorem,
+          producto.descripcion,
           style: TextStyle(
-            fontSize: 20.0,
-            fontWeight: FontWeight.w300,
+            fontSize: 17.0,
+            fontWeight: FontWeight.w700,
             color: Colors.grey
           ),
         ),
         Divider(),
         SizedBox(height: 20,),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[ 
-            Text(
-            'S/ $precio', 
-              style: TextStyle(
-                fontSize: 30, 
-                color: Colors.red, 
-                fontWeight: FontWeight.bold
-              ),
-            ),
-            Text(
-              'U. MED: CAJA',
-              style: TextStyle(
-                fontSize: 20, 
-                color: Colors.black45, 
-                fontWeight: FontWeight.normal
-              ),
-            ),
-          ]
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 10.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[ 
+              _showMarca(producto),
+              _showUMedida(producto)
+            ],
+          ),
         ),
-      SizedBox(height: 25.0,)
+        SizedBox(height: 40),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[ 
+            _showPrice(producto),
+          ],
+        ),
+        SizedBox(height: 30),
       ],
     ),
   );
+}
 
+Widget _showMarca(Producto producto){
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.center,
+    children: <Widget>[
+     Text(
+      'Marca: ', 
+        style: TextStyle(
+          fontSize: 20, 
+          color: Colors.black87, 
+          fontWeight: FontWeight.bold
+        ),
+      ),
+      Text(
+        producto.nameMarca, 
+          style: TextStyle(
+            fontSize: 22, 
+            color: Colors.black38, 
+            fontWeight: FontWeight.bold
+          ),
+      ),
+    ]
+  );
+}
+
+Widget _showUMedida(Producto producto){
+
+return Column(
+    crossAxisAlignment: CrossAxisAlignment.center,
+    children: <Widget>[
+      Text(
+        'U. Medida: ',
+        style: TextStyle(
+          fontSize: 20, 
+          color: Colors.black87, 
+          fontWeight: FontWeight.bold
+        ),
+      ),
+      Text(
+        producto.unidadMedida,
+        style: TextStyle(
+          fontSize: 22, 
+          color: Colors.black38, 
+          fontWeight: FontWeight.bold
+        ),
+      ),
+    ]
+  );
+}
+
+Widget _showPrice(Producto producto){
+
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.center,
+    children: <Widget>[ 
+      Text(
+      'S/ Precio: ', 
+        style: TextStyle(
+          fontSize: 25, 
+          color: Colors.black87, 
+          fontWeight: FontWeight.bold
+        ),
+      ),
+      Text(
+      'S/ ${producto.precio}', 
+        style: TextStyle(
+          fontSize: 30, 
+          color: Colors.blue, 
+          fontWeight: FontWeight.bold
+        ),
+      ),
+    ]
+  );
 }

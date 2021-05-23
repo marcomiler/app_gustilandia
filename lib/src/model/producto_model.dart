@@ -34,6 +34,7 @@ class Producto {
         this.nameMarca,
     });
 
+    String uniqueId;
     int idProducto;
     String nameProduct;
     String descripcion;
@@ -70,5 +71,13 @@ class Producto {
         "unidadMedida": unidadMedida,
         "nameMarca": nameMarca,
     };
+
+    getImagen(String img){
+    if (imagen == null || imagen == ""){
+      return 'https://www.fabricocina.com/wp-content/uploads/2018/06/image_large.png';
+    }else{
+      return 'http://192.168.0.106:8085/backendgusti/files/img/producto/$img';
+    }
+  }
 }
 
