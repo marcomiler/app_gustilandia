@@ -1,6 +1,8 @@
 import 'package:app_gustilandia/src/model/producto_model.dart';
+import 'package:app_gustilandia/src/services/shop_service.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
  
 class DetailsProduct extends StatelessWidget {
 
@@ -8,6 +10,7 @@ class DetailsProduct extends StatelessWidget {
   Widget build(BuildContext context) {
 
       final Producto producto  = ModalRoute.of(context).settings.arguments;
+      final shopService = Provider.of<ShopService>(context);
 
       return SafeArea(
         child: Scaffold(
@@ -33,7 +36,10 @@ class DetailsProduct extends StatelessWidget {
             elevation: 7,
             label: Text('Agregar al Carrito', style: TextStyle(color: Colors.white),),
             backgroundColor: Colors.redAccent,
-            onPressed: (){},
+            onPressed: (){
+              shopService.addProduct(producto);
+              Navigator.pop(context);
+            }
         ),
           
       )
@@ -102,10 +108,11 @@ Widget _details(Producto producto) {
         SizedBox(height: 20,),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 10.0),
-          child: Row(
+          child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[ 
               _showMarca(producto),
+              SizedBox(height: 10,),
               _showUMedida(producto)
             ],
           ),
@@ -124,7 +131,7 @@ Widget _details(Producto producto) {
 }
 
 Widget _showMarca(Producto producto){
-  return Column(
+  return Row(
     crossAxisAlignment: CrossAxisAlignment.center,
     children: <Widget>[
      Text(
@@ -135,6 +142,7 @@ Widget _showMarca(Producto producto){
           fontWeight: FontWeight.bold
         ),
       ),
+      Spacer(),
       Text(
         producto.nameMarca, 
           style: TextStyle(
@@ -149,7 +157,7 @@ Widget _showMarca(Producto producto){
 
 Widget _showUMedida(Producto producto){
 
-return Column(
+return Row(
     crossAxisAlignment: CrossAxisAlignment.center,
     children: <Widget>[
       Text(
@@ -160,6 +168,7 @@ return Column(
           fontWeight: FontWeight.bold
         ),
       ),
+      Spacer(),
       Text(
         producto.unidadMedida,
         style: TextStyle(

@@ -45,6 +45,7 @@ class Producto {
     int idMarca;
     String unidadMedida;
     String nameMarca;
+    // int quantity;
 
     Producto.fromJson(Map<String, dynamic> json){
         idProducto = json["idProducto"];
@@ -79,5 +80,9 @@ class Producto {
       return 'http://192.168.0.106:8085/backendgusti/files/img/producto/$img';
     }
   }
+
+  // void increment(){}
+
+  // void substract(){}
 }
 

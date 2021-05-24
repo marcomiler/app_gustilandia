@@ -1,15 +1,11 @@
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:app_gustilandia/src/model/category_temp_model.dart';
 import 'package:app_gustilandia/src/widget/list_products.dart';
-import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:provider/provider.dart';
-
 import 'package:app_gustilandia/src/search/search_delegate.dart';
-//import 'package:app_gustilandia/src/services/news_service.dart';
 import 'package:app_gustilandia/src/services/producto_service.dart';
-//import 'package:app_gustilandia/src/theme/theme.dart';
-//import 'package:app_gustilandia/src/widget/list_news.dart';
 
 class TabStore extends StatefulWidget {
 
@@ -21,7 +17,6 @@ class _TabTabStoreState extends State<TabStore> with AutomaticKeepAliveClientMix
   @override
   Widget build(BuildContext context) {
 
-    // final newsService = Provider.of<NewsService>(context);
     final prodService = Provider.of<ProductoService>(context);
 
     return SafeArea(
@@ -59,7 +54,6 @@ class _TabTabStoreState extends State<TabStore> with AutomaticKeepAliveClientMix
             _ListaCategorias(),
             if(!prodService.isLoading)
               Expanded(
-                //  child: ListNews(newsService.getArticleCategorySelected),
                 child: ListProductos(prodService.getProductsCategorySelected)
               ),         
             // if(newsService.isLoading)
@@ -84,9 +78,6 @@ class _ListaCategorias extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    // final newsService = Provider.of<NewsService>(context);
-
-    // final categories = Provider.of<NewsService>(context).categories;
     final prodService = Provider.of<ProductoService>(context);
     final categories = Provider.of<ProductoService>(context).categories;
     final _color = Colors.white38;
@@ -133,21 +124,17 @@ class _ListaCategorias extends StatelessWidget {
 
 class _CategoryButton extends StatelessWidget{
 
-  // final Category category;
   final CategoryTempModel category;
 
   const _CategoryButton(this.category);
 
   @override
   Widget build(BuildContext context) {
-
-    // final newsService = Provider.of<NewsService>(context);
+    
     final prodService = Provider.of<ProductoService>(context);
 
     return GestureDetector(
       onTap: (){
-        // final newsService = Provider.of<NewsService>(context, listen: false);//en false en este caso para que el widget no se redibuje
-        // newsService.selectedCategory = category.name;
         final prodService = Provider.of<ProductoService>(context, listen: false);
         prodService.selectedCategory = category.name;
       },

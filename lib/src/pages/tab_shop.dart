@@ -1,8 +1,6 @@
+import 'package:app_gustilandia/src/services/shop_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import 'package:app_gustilandia/src/model/producto_model.dart';
-import 'package:app_gustilandia/src/services/producto_service.dart';
 
 class TabShop extends StatelessWidget {
 
@@ -10,6 +8,9 @@ class TabShop extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final shopService = Provider.of<ShopService>(context);
+
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -24,8 +25,7 @@ class TabShop extends StatelessWidget {
             ),
           ),
         ),
-        body: _FullCart(),
-        // body: _FullCart(),
+        body: shopService.itemsShop.length == 0 ? _EmptyCart() : _FullCart(),
       ),
     );
   }
@@ -38,7 +38,7 @@ class _FullCart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    final productoService = Provider.of<ProductoService>(context);
+    final shopService = Provider.of<ShopService>(context);
 
     return Container(
       color: Colors.white,
@@ -52,11 +52,11 @@ class _FullCart extends StatelessWidget {
               child: ListView.builder(
                 itemExtent: 230,
                 scrollDirection: Axis.horizontal,
-                itemCount: 3,
+                itemCount: shopService.itemsShop.length,
                 itemBuilder: (context, index){
-                  final producto = productoService.searchProducts("");
+                  final producto = shopService.itemsShop[index];
                   return _ShoopingCartProduct(
-                    producto: new Producto(),//enviar parametro de productos
+                    productItem: producto,
                   );
                 },
               ),
@@ -78,17 +78,19 @@ class _FullCart extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
                         Text('Sub total', style: TextStyle(color: Colors.black, fontSize: 15),),
-                        Text('0.0 Soles', style: TextStyle(color: Colors.black, fontSize: 15)),
+                        Text('S/ ${shopService.subtotal.toStringAsFixed(2)}', style: TextStyle(color: Colors.black, fontSize: 15)),
                         ]
                       ),
+                      SizedBox(height: 8.0,),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
-                        Text('Delivery', style: TextStyle(color: Colors.black, fontSize: 15),),
-                        Text('Free', style: TextStyle(color: Colors.black, fontSize: 15)),
+                        Text('Igv(16%)', style: TextStyle(color: Colors.black, fontSize: 15),),
+                        SizedBox(height: 10.0,),
+                        Text('S/ ${shopService.igv.toStringAsFixed(2)}', style: TextStyle(color: Colors.black, fontSize: 15)),
                         ]
                       ),  
-                      SizedBox(height: 10.0,), 
+                      SizedBox(height: 8.0,), 
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
@@ -101,7 +103,7 @@ class _FullCart extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            'S/ 00.00',
+                            'S/ ${shopService.totalPriceCart.toStringAsFixed(2)}',
                             style: TextStyle(
                               color: Colors.black,
                               fontSize: 25,
@@ -119,7 +121,8 @@ class _FullCart extends StatelessWidget {
                         ),
                         width: double.infinity,
                         height: 50,
-                        child: InkWell(
+                        child: 
+                        InkWell(
                           child: Text(
                             'Finalizar compra',
                             style: TextStyle(
@@ -129,7 +132,9 @@ class _FullCart extends StatelessWidget {
                             ),
                             textAlign: TextAlign.center,
                           ),
-                          onTap: (){},
+                          onTap: (){
+                            _finallizedShop(context);
+                          },
                           
                         ),
                       )
@@ -148,12 +153,15 @@ class _FullCart extends StatelessWidget {
 class _ShoopingCartProduct extends StatelessWidget {
 
   
-  _ShoopingCartProduct({Key key, this.producto}) : super(key: key);
+  _ShoopingCartProduct({Key key, this.productItem}) : super(key: key);
 
-  final Producto producto;
+  final ProductItem productItem;
 
   @override
   Widget build(BuildContext context) {
+
+    final shopService = Provider.of<ShopService>(context);
+
     return Padding(
       padding: EdgeInsets.all(10.0),
         child: Stack(
@@ -170,14 +178,16 @@ class _ShoopingCartProduct extends StatelessWidget {
                   Expanded(
                     flex: 2,
                     child: CircleAvatar(
-                      backgroundColor: Colors.black26,
+                      backgroundColor: Colors.red,
                       child: ClipOval(
-                        child: Padding(
-                          padding: EdgeInsets.all(10.0),
-                          child: Image.asset(
-                            'assets/images/no-avatar.jpg',
-                            fit: BoxFit.contain
-                          ),
+                        child: FadeInImage(
+                          height: 120.0,
+                          width: 120.0,
+                          image: new NetworkImage(productItem.product.getImagen(productItem.product.imagen)),
+                          placeholder: AssetImage('assets/images/giphy.gif'),
+                          fit: BoxFit.fill,
+                          fadeOutDuration: Duration(milliseconds: 300),
+                          fadeInCurve: Curves.easeInToLinear,
                         ),
                       ),
                     )
@@ -188,12 +198,12 @@ class _ShoopingCartProduct extends StatelessWidget {
                     child: Column(
                       children: <Widget>[
                         Text(
-                          'Contrary to popular belief, Lorem Ipsum',
+                          productItem.product.nameProduct,
                           overflow: TextOverflow.ellipsis,
                         ),
                         SizedBox(height: 10.0,),
                         Text(
-                          'is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s',
+                          productItem.product.descripcion,
                           style: TextStyle(
                             color: Colors.grey,
                           ),
@@ -212,13 +222,13 @@ class _ShoopingCartProduct extends StatelessWidget {
                                 ),
                                 child: InkWell(
                                   child: Icon(Icons.remove, color: Colors.white,),
-                                  onTap: (){},
+                                  onTap: () => shopService.substract(productItem),
                                 ),
                               ),
                               Padding(
                                 padding: EdgeInsets.symmetric(horizontal: 8.0),
                                 child: Text(
-                                  '2',
+                                  '${productItem.quantity}',
                                   style: TextStyle(
                                     color: Colors.black
                                   ),
@@ -231,12 +241,12 @@ class _ShoopingCartProduct extends StatelessWidget {
                                 ),
                                 child: InkWell(
                                   child: Icon(Icons.add, color: Colors.white,),
-                                  onTap: (){},
+                                  onTap: () => shopService.increment(productItem),
                                 ),
                               ), 
                               Spacer(),
                               Text(
-                                'S/ 00',
+                                'S/ ${(productItem.quantity * productItem.product.precio).toStringAsFixed(2)}',
                                 style: TextStyle(  
                                   color: Colors.blue,
                                   fontSize: 25,
@@ -257,7 +267,7 @@ class _ShoopingCartProduct extends StatelessWidget {
           Positioned(
             right: 0,
             child: InkWell(
-              onTap: (){},
+              onTap: () => shopService.remove(productItem),
               child: CircleAvatar(
                 backgroundColor: Colors.pink,
                 child: Icon(Icons.delete_outline, color: Colors.white),
@@ -268,6 +278,37 @@ class _ShoopingCartProduct extends StatelessWidget {
       ),
     );
   }
+}
+
+void _finallizedShop(BuildContext context){
+  showDialog(
+    context: context, 
+    barrierDismissible: true,
+    builder: (context){
+      return AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+        title: Text("Completa los datos para finalizar tu compra"),
+        scrollable: true,
+        content: Column(
+          mainAxisSize: MainAxisSize.min,//para q se adapte al contenido interno
+          children: <Widget>[
+            Text('Aquí se mostraran los campos a completar para finalizar la compraAquí se mostraran los campos a completar para finalizar la compraAquí se mostraran los campos a completar para finalizar la compraAquí se mostraran los campos a completar para finalizar la compraAquí se mostraran los campos a completar para finalizar la compraAquí se mostraran los campos a completar para finalizar la compraAquí se mostraran los campos a completar para finalizar la compraAquí se mostraran los campos a completar para finalizar la compraAquí se mostraran los campos a completar para finalizar la compraAquí se mostraran los campos a completar para finalizar la compraAquí se mostraran los campos a completar para finalizar la compraAquí se mostraran los campos a completar para finalizar la compra'),
+            FlutterLogo(size: 100.0,)
+          ]
+        ),
+        actions: <Widget>[
+          TextButton(
+            child: Text('Cancelar'),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
+          TextButton(
+            child: Text('Ok'),
+            onPressed: ()  => Navigator.of(context).pop(),
+          )              
+        ],
+      );
+    }
+  );  
 }
 
 
