@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
         theme: mytheme,
         debugShowCheckedModeBanner: false,
         //home: TabsPage(),
-        initialRoute: 'tabs',
+        initialRoute: 'register',
         routes: getAplicationRoutes(),
         onGenerateRoute: (RouteSettings settings) {
           return MaterialPageRoute(

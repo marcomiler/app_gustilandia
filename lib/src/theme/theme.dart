@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 
-final mytheme = ThemeData(
-   backgroundColor: Colors.white,
-
-   fontFamily: 'Monserrat',
+final mytheme = ThemeData (
+  primarySwatch: Colors.redAccent[50],
+  primaryColor: Colors.redAccent.shade200,
+  backgroundColor: Colors.white,
+  fontFamily: 'Monserrat',
 
 );
-// colores a usar en la app:
-// Colors.redAccent.shade100;
-// Color(0XFFe28f83)
+

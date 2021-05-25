@@ -178,11 +178,11 @@ class _ShoopingCartProduct extends StatelessWidget {
                   Expanded(
                     flex: 2,
                     child: CircleAvatar(
-                      backgroundColor: Colors.red,
+                      //backgroundColor: Colors.red,
                       child: ClipOval(
                         child: FadeInImage(
-                          height: 120.0,
-                          width: 120.0,
+                          height: 150.0,
+                          width: 150.0,
                           image: new NetworkImage(productItem.product.getImagen(productItem.product.imagen)),
                           placeholder: AssetImage('assets/images/giphy.gif'),
                           fit: BoxFit.fill,
@@ -200,6 +200,9 @@ class _ShoopingCartProduct extends StatelessWidget {
                         Text(
                           productItem.product.nameProduct,
                           overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold
+                          ),
                         ),
                         SizedBox(height: 10.0,),
                         Text(
@@ -292,7 +295,7 @@ void _finallizedShop(BuildContext context){
         content: Column(
           mainAxisSize: MainAxisSize.min,//para q se adapte al contenido interno
           children: <Widget>[
-            Text('Aquí se mostraran los campos a completar para finalizar la compraAquí se mostraran los campos a completar para finalizar la compraAquí se mostraran los campos a completar para finalizar la compraAquí se mostraran los campos a completar para finalizar la compraAquí se mostraran los campos a completar para finalizar la compraAquí se mostraran los campos a completar para finalizar la compraAquí se mostraran los campos a completar para finalizar la compraAquí se mostraran los campos a completar para finalizar la compraAquí se mostraran los campos a completar para finalizar la compraAquí se mostraran los campos a completar para finalizar la compraAquí se mostraran los campos a completar para finalizar la compraAquí se mostraran los campos a completar para finalizar la compra'),
+            Text('Aquí se mostraran los campos a completar para finalizar la compra'),
             FlutterLogo(size: 100.0,)
           ]
         ),

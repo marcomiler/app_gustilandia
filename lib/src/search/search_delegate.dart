@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import 'package:app_gustilandia/src/pages/details_product.dart';
 import 'package:app_gustilandia/src/model/producto_model.dart';
 import 'package:app_gustilandia/src/services/producto_service.dart';
 
@@ -84,7 +85,15 @@ class DataSearch extends SearchDelegate{
                 onTap: (){
                   close(context, null);//cierro la busqueda
                   producto.uniqueId = '';
-                  Navigator.pushNamed(context, 'details', arguments: producto);
+                  Navigator.push(
+                    context, 
+                    PageRouteBuilder(
+                      transitionDuration: Duration(seconds: 1),
+                      pageBuilder: (_,__,___) => DetailsProduct(),
+                      settings: RouteSettings(name: 'details', arguments: producto)
+                    )
+                  );
+                  //Navigator.pushNamed(context, 'details', arguments: producto);
                 },
               );
             }).toList(),

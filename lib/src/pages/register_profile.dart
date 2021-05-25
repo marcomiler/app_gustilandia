@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class LoginPage extends StatelessWidget {
+class RegisterPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
@@ -9,8 +9,8 @@ class LoginPage extends StatelessWidget {
       child: Scaffold(
         body: Stack(
           children: <Widget>[
-            _crearFondo(context),
-            _loginForm(context),
+            _createFondo(context),
+            _registerForm(context),
           ]
         ),
       ),
@@ -19,7 +19,7 @@ class LoginPage extends StatelessWidget {
   }
 }
 
- Widget _loginForm(BuildContext context){
+ Widget _registerForm(BuildContext context){
 
    final size = MediaQuery.of(context).size;
 
@@ -27,16 +27,9 @@ class LoginPage extends StatelessWidget {
    return SingleChildScrollView(
      child: Column(
        children: <Widget>[
-
-         SafeArea(
-          child: Container(
-            height: 160.0,
-          ),  
-         ),
-
          Container(
            width: size.width * 0.85,
-           margin: EdgeInsets.only(top: 20.0, bottom: 10),
+           margin: EdgeInsets.only(left: 20, right: 20, top: 60, bottom: 10),
            padding: EdgeInsets.only(top: 40.0, bottom: 30.0, left: 20, right: 20),
            decoration: BoxDecoration(
              color: Colors.white,
@@ -52,20 +45,29 @@ class LoginPage extends StatelessWidget {
            ),
           child: Column(
             children: <Widget>[
-              Text('Ingreso', style: TextStyle(fontSize: 27.0, color: Colors.redAccent.shade100, fontWeight: FontWeight.bold)),
+              Text('Registro', style: TextStyle(fontSize: 27.0, color: Colors.redAccent.shade100, fontWeight: FontWeight.bold)),
               SizedBox(height: 20.0,),
-              _crearEmail(),
-              SizedBox(height: 40.0,),
-              _crearPassword(),
-              SizedBox(height: 40.0,),
-              _crearBoton(),
+              _createFullName(),
+              SizedBox(height: 20.0,),
+              _createEmail(),
+              SizedBox(height: 30.0,),
+              _createPassword(),
+              SizedBox(height: 30.0,),
+              _createTextInfo(),
+              SizedBox(height: 30.0,),
+              _createBoton(context),
             ],
           ),
         ),
 
-        TextButton(
-          child: Text('Crear una nueva cuenta', style: TextStyle(color: Colors.white, fontSize: 15),),
-           onPressed: () => Navigator.pushReplacementNamed(context, 'register'),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            TextButton(
+              child: Text('¿Ya tienes una cuenta? Ingresar', style: TextStyle(color: Colors.white, fontSize: 15),),
+              onPressed: () => Navigator.pushReplacementNamed(context, 'login'),
+            ),
+          ]
         ),
         SizedBox(height: 40.0,),
        ],
@@ -73,7 +75,53 @@ class LoginPage extends StatelessWidget {
    );
  }
 
-  Widget _crearEmail(){
+ Widget _createTextInfo(){
+
+   return Container(
+     padding: EdgeInsets.all(8.0),
+     decoration: BoxDecoration(
+       borderRadius: BorderRadius.circular(5.0),
+       color: Color(0xFFF7DC6F),
+     ),
+     child: Text(
+       'Atención: Su contraseña será su número de DNI, por favor ingrese el formato correcto. \n Ej: 71727172',
+       style: TextStyle(
+         color: Colors.white,
+         fontWeight: FontWeight.bold
+       ),
+     ),
+
+   );
+
+ }
+
+ Widget _createFullName(){
+ 
+    return Container(
+      child: TextField(
+        cursorColor: Colors.redAccent.shade100,
+        keyboardType: TextInputType.emailAddress,
+        decoration: InputDecoration(
+          icon: Icon(FontAwesomeIcons.userAlt, color: Colors.redAccent.shade100),
+          hintText: 'Ej: Juan Perez Carrasco',
+          labelText: 'Escriba su nombre completo',
+          hintStyle: TextStyle(
+            color: Colors.grey,
+            fontSize: 12.0
+          ),
+          labelStyle: TextStyle(
+            color: Colors.grey,
+            fontSize: 12.0
+          ),
+          border: UnderlineInputBorder(
+            borderSide: new BorderSide(color: Colors.redAccent.shade200)
+          )
+        ),
+      ),
+    );
+  } 
+
+  Widget _createEmail(){
  
     return Container(
       child: TextField(
@@ -99,7 +147,7 @@ class LoginPage extends StatelessWidget {
     );
   }  
 
-  Widget _crearPassword(){
+  Widget _createPassword(){
 
     return Container(
       child: TextField(
@@ -116,12 +164,12 @@ class LoginPage extends StatelessWidget {
     );
   } 
 
-  Widget _crearBoton(){
+  Widget _createBoton(BuildContext context){
 
     return ElevatedButton(
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 80.0, vertical: 15.0),
-        child: Text('Ingresar'),
+        child: Text('Registrar'),
       ),
       style: ButtonStyle(//las propiedades seran configuaradas con MaterialStateProperty
         shape: MaterialStateProperty.all(RoundedRectangleBorder(
@@ -132,11 +180,11 @@ class LoginPage extends StatelessWidget {
       backgroundColor: MaterialStateProperty.all(Colors.redAccent.shade100)
     ),
     
-      onPressed: (){}
+      onPressed: () => Navigator.pushReplacementNamed(context, 'tabs'),
   );
   }
 
-  Widget _crearFondo(BuildContext context){
+  Widget _createFondo(BuildContext context){
 
     final fondo = Container(
       height: double.infinity,
@@ -154,42 +202,6 @@ class LoginPage extends StatelessWidget {
     return Stack(
       children: <Widget>[
         fondo,
-        // Positioned(child: Container(child: _golosinas('assets/images/cake2.png')), top: 10, right: 5),
-        // Positioned(child: Container(child: _golosinas('assets/images/fresias.jpg')), top: 10, left: 5,),
-        // Positioned(child: Container(child: _golosinas('assets/images/cake1.jpg')), bottom: 10, left: 5,),
-        // Positioned(child: Container(child: _golosinas('assets/images/choco.png')), bottom: 10, right: 5,),
-
-        Container(
-          padding: EdgeInsets.only(top: 20.0, bottom: 2.0),
-          child: Column(
-            children: <Widget>[
-              Icon(Icons.storefront_sharp, color: Colors.white, size: 100.0),
-              SizedBox(width: double.infinity,),
-              Text('Gustilandia', style: TextStyle(color: Colors.white, fontSize: 35.0, fontWeight: FontWeight.bold))
-            ]
-          )
-        )
       ],
     );
  }
-
-//  Widget _golosinas(String path) {
-//     return Container(
-//       width: 50,
-//       height: 50,
-//       decoration: BoxDecoration(
-//         shape: BoxShape.circle,
-//         color: Color.fromRGBO(255, 255, 255, 0.8)
-//       ),
-//       child: ClipRRect(
-//         borderRadius: BorderRadius.circular(50),
-//         child: Image.asset(
-//           path,
-//           fit: BoxFit.contain,
-//           width: 10,
-//           height: 10,
-//         ),
-//       ),
-//   );
-// }
-      

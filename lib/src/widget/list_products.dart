@@ -1,4 +1,5 @@
 import 'package:app_gustilandia/src/model/producto_model.dart';
+import 'package:app_gustilandia/src/pages/details_product.dart';
 import 'package:flutter/material.dart';
 
 class ListProductos extends StatelessWidget{
@@ -30,7 +31,15 @@ class _TarjetaTopBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(      
       onTap: (){
-        Navigator.pushNamed(context, 'details', arguments: producto);
+        // Navigator.pushNamed(context, 'details', arguments: producto);
+        Navigator.push(
+          context, 
+          PageRouteBuilder(
+            transitionDuration: Duration(seconds: 1),
+            pageBuilder: (_,__,___) => DetailsProduct(),
+            settings: RouteSettings(name: 'details', arguments: producto)
+          )
+        );
       },
       child: Container(
         decoration: BoxDecoration(

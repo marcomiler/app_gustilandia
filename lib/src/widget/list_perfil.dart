@@ -12,7 +12,7 @@ class ListPerfil extends StatelessWidget {
     return ListView(
       children: <Widget>[
         Divider(),
-        _itemList('Editar Perfil', Icon(FontAwesomeIcons.edit, color: color,), ()=> Navigator.pushNamed(context, 'edit_profile'), color, true),
+        _itemList('Editar Perfil', Icon(FontAwesomeIcons.solidEdit, color: color,), ()=> Navigator.pushNamed(context, 'edit_profile'), color, true),
         Divider(),
         _itemList('Mis Ordenes', Icon(FontAwesomeIcons.shoppingBag, color: color,), ()=> Navigator.pushNamed(context, 'bagShoping'), color, true),
         Divider(),

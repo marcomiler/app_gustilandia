@@ -54,20 +54,20 @@ Widget _crearAppBar(Producto producto){
       color: Colors.black //darle color a los iconos del sliveAppBar
     ),
     elevation: 7.0,
-    backgroundColor: Colors.indigoAccent,
+    backgroundColor: Colors.white70,
     expandedHeight: 250.0,//ver opcion de aumentar a 300
     floating: false,
     pinned: true,
     flexibleSpace: FlexibleSpaceBar(
-      centerTitle: true,
-      title: Text(
-        producto.nameProduct,
-        style: TextStyle(color: Colors.redAccent.shade200, fontSize: 16.0, fontWeight: FontWeight.bold)
-      ),
+      // centerTitle: true,
+      // title: Text(
+      //   producto.nameProduct,
+      //   style: TextStyle(color: Colors.redAccent.shade200, fontSize: 16.0, fontWeight: FontWeight.bold)
+      // ),
       background: Hero(
         tag: producto.uniqueId,
         child: FadeInImage(
-          placeholder: AssetImage('assets/images/loading.gif'),
+          placeholder: AssetImage('assets/images/jar-loading.gif'),
           image: NetworkImage(producto.getImagen(producto.imagen)),
           //fadeInDuration: Duration(milliseconds: 150),
           fit: BoxFit.cover,
@@ -87,11 +87,25 @@ Widget _details(Producto producto) {
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              producto.nameProduct,
+              style: TextStyle(
+                color: Colors.black,
+                  fontSize: 35.0,
+                  fontWeight: FontWeight.bold
+              ),
+            ),
+          ]          
+        ),
+        SizedBox(height: 15.0,),
         Text('Acerca del producto: ',
           textAlign: TextAlign.start,
           style: TextStyle(
             color: Colors.black87,
-              fontSize: 30.0,
+              fontSize: 23.0,
               fontWeight: FontWeight.bold
           ),
         ),

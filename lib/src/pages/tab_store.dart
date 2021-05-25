@@ -60,7 +60,10 @@ class _TabTabStoreState extends State<TabStore> with AutomaticKeepAliveClientMix
             if(prodService.isLoading)
             Expanded(
               child: Center(
-                child: CircularProgressIndicator()
+                child: CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color> (Colors.red),
+                  strokeWidth: 6.0,
+                )
               ),
             )
           ]
