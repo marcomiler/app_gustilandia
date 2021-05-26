@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 
 import 'package:app_gustilandia/src/widget/list_perfil.dart';
+import 'package:app_gustilandia/src/preferences/profile_preferences.dart';
 
 class TabProfile extends StatelessWidget {
+  
   TabProfile();
 
   @override
   Widget build(BuildContext context) {
+
+    final prefs = new PreferenciasUsuario();
+    
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,
@@ -44,7 +49,7 @@ class TabProfile extends StatelessWidget {
                   ),
                   SizedBox(height: 10.0,),
                   Text(
-                    'Username',
+                    prefs.getNameClient,
                     style: TextStyle( 
                       fontWeight: FontWeight.bold,
                       fontSize: 25.0,

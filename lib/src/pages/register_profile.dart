@@ -1,10 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class RegisterPage extends StatelessWidget {
+import 'package:app_gustilandia/src/services/cliente_service.dart';
+import 'package:app_gustilandia/src/services/validation_signup.dart';
+import 'package:app_gustilandia/src/utils/utils.dart';
+
+class RegisterPage extends StatefulWidget {
+
+  @override
+  _RegisterPageState createState() => _RegisterPageState();
+}
+
+class _RegisterPageState extends State<RegisterPage> {
+
+  GlobalKey<FormState> keyForm= new GlobalKey();
 
   @override
   Widget build(BuildContext context) {
+
     return SafeArea(
       child: Scaffold(
         body: Stack(
@@ -17,13 +31,11 @@ class RegisterPage extends StatelessWidget {
     );
 
   }
-}
 
  Widget _registerForm(BuildContext context){
 
    final size = MediaQuery.of(context).size;
 
-   //para poder scrollear a los que lo contengan
    return SingleChildScrollView(
      child: Column(
        children: <Widget>[
@@ -43,20 +55,23 @@ class RegisterPage extends StatelessWidget {
                )
              ]
            ),
-          child: Column(
-            children: <Widget>[
-              Text('Registro', style: TextStyle(fontSize: 27.0, color: Colors.redAccent.shade100, fontWeight: FontWeight.bold)),
-              SizedBox(height: 20.0,),
-              _createFullName(),
-              SizedBox(height: 20.0,),
-              _createEmail(),
-              SizedBox(height: 30.0,),
-              _createPassword(),
-              SizedBox(height: 30.0,),
-              _createTextInfo(),
-              SizedBox(height: 30.0,),
-              _createBoton(context),
-            ],
+          child: Form(
+            key: keyForm,
+            child: Column(
+              children: <Widget>[
+                Text('Registro', style: TextStyle(fontSize: 27.0, color: Colors.redAccent.shade100, fontWeight: FontWeight.bold)),
+                SizedBox(height: 20.0,),
+                _createFullName(context),
+                SizedBox(height: 20.0,),
+                _createEmail(context),
+                SizedBox(height: 30.0,),
+                _createPassword(context),
+                SizedBox(height: 30.0,),
+                _createTextInfo(),
+                SizedBox(height: 30.0,),
+                _createBoton(context),
+              ],
+            ),
           ),
         ),
 
@@ -74,6 +89,28 @@ class RegisterPage extends StatelessWidget {
      ),
    );
  }
+
+ void _register(BuildContext context) async{
+
+  final clienteService = Provider.of<ClienteService>(context, listen: false);
+  final validationService = Provider.of<ValidationSignUpService>(context, listen: false);
+
+  if (!keyForm.currentState.validate()) return;
+    
+   keyForm.currentState.save();
+   final name = validationService.nombreCompleto.value;
+   final email = validationService.email.value;
+   final password = validationService.password.value;
+
+  bool register = await clienteService.registerClient(name, email, password);
+
+  if(!register){
+    mostrarAlerta(context, clienteService.messageError);
+  }else{
+    Navigator.pushReplacementNamed(context, 'tabs');
+  }
+
+}
 
  Widget _createTextInfo(){
 
@@ -95,16 +132,22 @@ class RegisterPage extends StatelessWidget {
 
  }
 
- Widget _createFullName(){
+ Widget _createFullName(BuildContext context){
+
+   final validationService = Provider.of<ValidationSignUpService>(context);
  
     return Container(
-      child: TextField(
+      child: TextFormField(
         cursorColor: Colors.redAccent.shade100,
         keyboardType: TextInputType.emailAddress,
+        onChanged: (String value) {
+          validationService.changeNombreCompleto(value);
+        },
         decoration: InputDecoration(
           icon: Icon(FontAwesomeIcons.userAlt, color: Colors.redAccent.shade100),
           hintText: 'Ej: Juan Perez Carrasco',
           labelText: 'Escriba su nombre completo',
+          errorText: validationService.nombreCompleto.error,
           hintStyle: TextStyle(
             color: Colors.grey,
             fontSize: 12.0
@@ -115,22 +158,28 @@ class RegisterPage extends StatelessWidget {
           ),
           border: UnderlineInputBorder(
             borderSide: new BorderSide(color: Colors.redAccent.shade200)
-          )
+          ),
         ),
       ),
     );
   } 
 
-  Widget _createEmail(){
+  Widget _createEmail(BuildContext context){
+
+    final validationService = Provider.of<ValidationSignUpService>(context);
  
     return Container(
-      child: TextField(
+      child: TextFormField(
         cursorColor: Colors.redAccent.shade100,
         keyboardType: TextInputType.emailAddress,
+        onChanged: (String value) {
+          validationService.changeEmail(value);
+        },
         decoration: InputDecoration(
           icon: Icon(FontAwesomeIcons.at, color: Colors.redAccent.shade100),
           hintText: 'Ej: ejemplo@ejemplo.com',
           labelText: 'Correo electrónico',
+          errorText: validationService.email.error,
           hintStyle: TextStyle(
             color: Colors.grey,
             fontSize: 12.0
@@ -147,14 +196,21 @@ class RegisterPage extends StatelessWidget {
     );
   }  
 
-  Widget _createPassword(){
+  Widget _createPassword(BuildContext context){
+
+    final validationService = Provider.of<ValidationSignUpService>(context);
 
     return Container(
-      child: TextField(
-        keyboardType: TextInputType.visiblePassword,
+      child: TextFormField(
+        keyboardType: TextInputType.number,
+        onChanged: (String value) {
+          validationService.changePassword(value);
+        },
+        obscureText: true,
         decoration: InputDecoration(
           icon: Icon(FontAwesomeIcons.lock, color: Colors.redAccent.shade100),
           labelText: 'Contraseña',
+          errorText: validationService.password.error,
           labelStyle: TextStyle(
             color: Colors.grey,
             fontSize: 12.0
@@ -165,6 +221,8 @@ class RegisterPage extends StatelessWidget {
   } 
 
   Widget _createBoton(BuildContext context){
+
+    final validationService = Provider.of<ValidationSignUpService>(context);
 
     return ElevatedButton(
       child: Container(
@@ -180,7 +238,7 @@ class RegisterPage extends StatelessWidget {
       backgroundColor: MaterialStateProperty.all(Colors.redAccent.shade100)
     ),
     
-      onPressed: () => Navigator.pushReplacementNamed(context, 'tabs'),
+    onPressed: (!validationService.isValid) ? null : () => _register(context),
   );
   }
 
@@ -205,3 +263,4 @@ class RegisterPage extends StatelessWidget {
       ],
     );
  }
+}
