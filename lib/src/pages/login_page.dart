@@ -1,7 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
+
+  @override
+  _LoginPageState createState() => _LoginPageState();
+}
+
+
+class _LoginPageState extends State<LoginPage> {
+
+  GlobalKey<FormState> keyForm= new GlobalKey();
+  bool _obscureText = true;
+
+  void _toggle(){
+    setState(() {
+      _obscureText = !_obscureText;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +33,7 @@ class LoginPage extends StatelessWidget {
     );
 
   }
-}
+
 
  Widget _loginForm(BuildContext context){
 
@@ -102,9 +118,19 @@ class LoginPage extends StatelessWidget {
   Widget _crearPassword(){
 
     return Container(
-      child: TextField(
-        keyboardType: TextInputType.visiblePassword,
+      child: TextFormField(
+        keyboardType: TextInputType.number,
+        obscureText: _obscureText,
         decoration: InputDecoration(
+          suffixIcon: Padding(
+            padding: EdgeInsetsDirectional.only(start: 12),
+            child: IconButton( 
+              icon: Icon(Icons.remove_red_eye,
+                color: _obscureText ? Colors.grey : Colors.redAccent.shade100 
+              ),
+              onPressed: _toggle,
+            ),
+          ),
           icon: Icon(FontAwesomeIcons.lock, color: Colors.redAccent.shade100),
           labelText: 'Contraseña',
           labelStyle: TextStyle(
@@ -192,4 +218,5 @@ class LoginPage extends StatelessWidget {
 //       ),
 //   );
 // }
+}
       

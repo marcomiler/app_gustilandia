@@ -1,8 +1,10 @@
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
 import 'package:app_gustilandia/src/model/producto_model.dart';
 import 'package:app_gustilandia/src/services/shop_service.dart';
-import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:provider/provider.dart';
+import 'package:app_gustilandia/src/utils/utils.dart';
  
 class DetailsProduct extends StatelessWidget {
 
@@ -37,6 +39,7 @@ class DetailsProduct extends StatelessWidget {
             label: Text('Agregar al Carrito', style: TextStyle(color: Colors.white),),
             backgroundColor: Colors.redAccent,
             onPressed: (){
+              showSnackBar(context);
               shopService.addProduct(producto);
               Navigator.pop(context);
             }
@@ -55,22 +58,17 @@ Widget _crearAppBar(Producto producto){
     ),
     elevation: 7.0,
     backgroundColor: Colors.white70,
-    expandedHeight: 250.0,//ver opcion de aumentar a 300
+    expandedHeight: 260.0,//ver opcion de aumentar a 300
     floating: false,
     pinned: true,
     flexibleSpace: FlexibleSpaceBar(
-      // centerTitle: true,
-      // title: Text(
-      //   producto.nameProduct,
-      //   style: TextStyle(color: Colors.redAccent.shade200, fontSize: 16.0, fontWeight: FontWeight.bold)
-      // ),
       background: Hero(
         tag: producto.uniqueId,
         child: FadeInImage(
           placeholder: AssetImage('assets/images/jar-loading.gif'),
           image: NetworkImage(producto.getImagen(producto.imagen)),
-          //fadeInDuration: Duration(milliseconds: 150),
-          fit: BoxFit.cover,
+          fadeInDuration: Duration(milliseconds: 150),
+          fit: BoxFit.fill,
           fadeInCurve: Curves.easeInToLinear,
         ),
       ),
@@ -93,7 +91,7 @@ Widget _details(Producto producto) {
             Text(
               producto.nameProduct,
               style: TextStyle(
-                color: Colors.black,
+                color: Colors.redAccent.shade200,
                   fontSize: 35.0,
                   fontWeight: FontWeight.bold
               ),
@@ -121,12 +119,12 @@ Widget _details(Producto producto) {
         Divider(),
         SizedBox(height: 20,),
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: 10.0),
+          padding: EdgeInsets.symmetric(horizontal: 15.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[ 
               _showMarca(producto),
-              SizedBox(height: 10,),
+              SizedBox(height: 15,),
               _showUMedida(producto)
             ],
           ),
@@ -201,15 +199,17 @@ Widget _showPrice(Producto producto){
     mainAxisAlignment: MainAxisAlignment.center,
     children: <Widget>[ 
       Text(
-      'S/ Precio: ', 
+      'Precio: ', 
         style: TextStyle(
           fontSize: 25, 
           color: Colors.black87, 
           fontWeight: FontWeight.bold
         ),
       ),
+      SizedBox(width: 8.0,),
       Text(
-      'S/ ${producto.precio}', 
+      'S/ ${producto.precio.toStringAsFixed(2)}', 
+        overflow: TextOverflow.ellipsis,
         style: TextStyle(
           fontSize: 30, 
           color: Colors.blue, 

@@ -21,7 +21,7 @@ class ValidationSignUpService with ChangeNotifier{
   }
 
   //Setters
-  void changeNombreCompleto(String value){
+  void changeNombreCompleto(String value){//falta validar que no se ingresen numeros
     if(value.length >= 3){
       _nombreCompleto = ValidationItem(value, null);
     }else{
@@ -64,5 +64,8 @@ class ValidationSignUpService with ChangeNotifier{
 
   //visiitar esta pagina para las validaciones:
   //https://codigofacilito.com/articulos/articulo_28_10_2019_17_58_51
+
+  //visitar para volver el password visible o no 
+  //https://stackoverflow.com/questions/49125064/how-to-show-hide-password-in-textformfield
 
 }

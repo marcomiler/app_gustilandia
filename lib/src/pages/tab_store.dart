@@ -1,9 +1,9 @@
+import 'package:app_gustilandia/src/widget/list_products.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:app_gustilandia/src/model/category_temp_model.dart';
-import 'package:app_gustilandia/src/widget/list_products.dart';
 import 'package:app_gustilandia/src/search/search_delegate.dart';
 import 'package:app_gustilandia/src/services/producto_service.dart';
 
@@ -54,9 +54,8 @@ class _TabTabStoreState extends State<TabStore> with AutomaticKeepAliveClientMix
             _ListaCategorias(),
             if(!prodService.isLoading)
               Expanded(
-                child: ListProductos(prodService.getProductsCategorySelected)
-              ),         
-            // if(newsService.isLoading)
+                child: ListProducts(prodService.getProductsCategorySelected)
+              ),
             if(prodService.isLoading)
             Expanded(
               child: Center(

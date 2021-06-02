@@ -59,7 +59,7 @@ class TabProfile extends StatelessWidget {
                 ],
               ) 
             ),
-            SizedBox(height: 25.0),
+            SizedBox(height: 30.0),
             Expanded(
               flex: 2,
               child: ListPerfil(),

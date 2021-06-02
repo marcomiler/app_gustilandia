@@ -73,7 +73,7 @@ class DataSearch extends SearchDelegate{
                       fadeInDuration: Duration(milliseconds: 300),
                       fadeInCurve: Curves.easeInToLinear,
                       image: NetworkImage(producto.getImagen(producto.imagen)),
-                      placeholder: AssetImage('assets/images/no-image.jpg'),
+                      placeholder: AssetImage('assets/images/no-image.png'),
                       width: 50.0,
                       height: 80.0,
                       fit: BoxFit.cover,

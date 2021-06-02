@@ -1,9 +1,11 @@
+import 'package:flutter/material.dart';
+
 import 'package:app_gustilandia/src/pages/about_app.dart';
 import 'package:app_gustilandia/src/pages/edit_profile.dart';
 import 'package:app_gustilandia/src/pages/login_page.dart';
 import 'package:app_gustilandia/src/pages/my_orders.dart';
+import 'package:app_gustilandia/src/pages/navigation_bar.dart';
 import 'package:app_gustilandia/src/pages/register_profile.dart';
-import 'package:flutter/material.dart';
 
 import 'package:app_gustilandia/src/pages/tabs_page.dart';
 import 'package:app_gustilandia/src/pages/tab_shop.dart';
@@ -24,5 +26,7 @@ Map<String, WidgetBuilder> getAplicationRoutes(){
     'edit_profile'  : (BuildContext context) => EditProfile(),
     'bagShoping'    : (BuildContext context) => MyOrders(),
     'about'         : (BuildContext context) => AboutApp(),
+    'navigation'    : (BuildContext context) => NavigationBar(),
+
   };
 }

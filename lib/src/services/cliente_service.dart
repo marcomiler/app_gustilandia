@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:app_gustilandia/src/preferences/profile_preferences.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 final _URL_GUSTILANDIA = 'http://192.168.0.106:8085/backendgusti';
 
@@ -59,7 +60,10 @@ class ClienteService with ChangeNotifier{
 
   }
 
-  
-
+  logOut(BuildContext context){
+    _prefs.setNameClient = "";
+    _prefs.setNameClient = "";
+    _prefs.setPasswordClient = "";
+  }
 
 }

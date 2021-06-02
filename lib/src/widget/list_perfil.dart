@@ -1,3 +1,4 @@
+import 'package:app_gustilandia/src/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -18,7 +19,11 @@ class ListPerfil extends StatelessWidget {
         Divider(),
         _itemList('Acerca de Gustilandia', Icon(FontAwesomeIcons.infoCircle, color: color,), ()=> Navigator.pushNamed(context, 'about'), color, true),
         Divider(),
-        _itemList('Cerrar Sesión', Icon(FontAwesomeIcons.signOutAlt, color: color,), (){}, color, false),
+        _itemList('Cerrar Sesión', Icon(FontAwesomeIcons.signOutAlt, color: color,),
+         (){
+           alertLogOut(context, '¿Está seguro que quiere cerrar sesión?');
+         }, 
+         color, false),
       ],
     );
   }

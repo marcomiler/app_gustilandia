@@ -6,6 +6,7 @@ class ShopService with ChangeNotifier{
 
   List<ProductItem> itemsShop = <ProductItem>[];
   int totalItems = 0;
+  int totalProducts = 0;
   double totalPriceProduct = 0.0;
   double totalPriceCart = 0.0;
   double igv = 0.0;
@@ -34,6 +35,8 @@ class ShopService with ChangeNotifier{
     
     igv = totalPriceCart * 0.16;
     subtotal = totalPriceCart - igv;
+    totalProducts = itemsShop.fold(0, (previousValue, element) => element.quantity + previousValue);
+    
     notifyListeners();// ya que todos los metodos entran a este "metodo" solo se refresca aqui
   }  
 
@@ -53,6 +56,11 @@ class ShopService with ChangeNotifier{
 
     void remove(ProductItem prod){
       itemsShop.remove(prod);
+      calculateTotals(itemsShop);
+    }
+
+    void removeAll(){
+      itemsShop.clear();
       calculateTotals(itemsShop);
     }
 }

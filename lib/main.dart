@@ -45,8 +45,8 @@ class _MyAppState extends State<MyApp> {
       child: MaterialApp(
         theme: mytheme,
         debugShowCheckedModeBanner: false,
-        //home: TabsPage(),
-        initialRoute: 'login',
+        // initialRoute: 'login',
+        initialRoute: 'navigation',
         routes: getAplicationRoutes(),
         onGenerateRoute: (RouteSettings settings) {
           return MaterialPageRoute(

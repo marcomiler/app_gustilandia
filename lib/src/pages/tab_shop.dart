@@ -24,6 +24,13 @@ class TabShop extends StatelessWidget {
               fontWeight: FontWeight.bold,
             ),
           ),
+          actions: <Widget>[
+            shopService.itemsShop.length == 0 ? SizedBox()
+            :TextButton(
+              child: Text('Vaciar carrito', style: TextStyle(color: Colors.red, fontSize: 13)),
+              onPressed: shopService.removeAll,
+            ),
+          ], 
         ),
         body: shopService.itemsShop.length == 0 ? _EmptyCart() : _FullCart(),
       ),
@@ -65,7 +72,7 @@ class _FullCart extends StatelessWidget {
           Expanded(
             flex: 2,
             child: Padding(
-              padding: EdgeInsets.all(15.0),
+              padding: EdgeInsets.all(10.0),
               child: Card(
                 elevation: 7,
                 color: Colors.white,
@@ -77,11 +84,20 @@ class _FullCart extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
+                        Text('Cant. total de productos', style: TextStyle(color: Colors.black, fontSize: 15),),
+                        SizedBox(height: 10.0,),
+                        Text('${shopService.totalProducts}', style: TextStyle(color: Colors.black, fontSize: 15)),
+                        ]
+                      ),
+                      SizedBox(height: 5.0,),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
                         Text('Sub total', style: TextStyle(color: Colors.black, fontSize: 15),),
                         Text('S/ ${shopService.subtotal.toStringAsFixed(2)}', style: TextStyle(color: Colors.black, fontSize: 15)),
                         ]
                       ),
-                      SizedBox(height: 8.0,),
+                      SizedBox(height: 5.0,),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
@@ -89,8 +105,8 @@ class _FullCart extends StatelessWidget {
                         SizedBox(height: 10.0,),
                         Text('S/ ${shopService.igv.toStringAsFixed(2)}', style: TextStyle(color: Colors.black, fontSize: 15)),
                         ]
-                      ),  
-                      SizedBox(height: 8.0,), 
+                      ),
+                      SizedBox(height: 5.0,), 
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
@@ -178,7 +194,6 @@ class _ShoopingCartProduct extends StatelessWidget {
                   Expanded(
                     flex: 2,
                     child: CircleAvatar(
-                      //backgroundColor: Colors.red,
                       child: ClipOval(
                         child: FadeInImage(
                           height: 150.0,
@@ -200,7 +215,9 @@ class _ShoopingCartProduct extends StatelessWidget {
                         Text(
                           productItem.product.nameProduct,
                           overflow: TextOverflow.ellipsis,
+                          maxLines: 2,
                           style: TextStyle(
+                            fontSize: 22,
                             fontWeight: FontWeight.bold
                           ),
                         ),
@@ -215,7 +232,7 @@ class _ShoopingCartProduct extends StatelessWidget {
                         ),
                         SizedBox(height: 10.0,),
                         Padding(
-                          padding: EdgeInsets.all(8.0),
+                          padding: EdgeInsets.all(5.0),
                           child: Row(
                             children: <Widget>[
                               Container(
@@ -229,7 +246,7 @@ class _ShoopingCartProduct extends StatelessWidget {
                                 ),
                               ),
                               Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 8.0),
+                                padding: EdgeInsets.symmetric(horizontal: 5.0),
                                 child: Text(
                                   '${productItem.quantity}',
                                   style: TextStyle(
@@ -252,7 +269,7 @@ class _ShoopingCartProduct extends StatelessWidget {
                                 'S/ ${(productItem.quantity * productItem.product.precio).toStringAsFixed(2)}',
                                 style: TextStyle(  
                                   color: Colors.blue,
-                                  fontSize: 25,
+                                  fontSize: 23,
                                   fontWeight: FontWeight.bold
                                 ),
                               ),
@@ -359,7 +376,7 @@ class _EmptyCart extends StatelessWidget {
                 ),
               ),
               onPressed: (){
-                Navigator.pushNamed(context, 'tabs');
+                Navigator.pushNamed(context, 'navigation');
               },
             ),  
           )

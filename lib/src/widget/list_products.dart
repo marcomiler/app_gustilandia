@@ -1,25 +1,30 @@
-import 'package:app_gustilandia/src/model/producto_model.dart';
-import 'package:app_gustilandia/src/pages/details_product.dart';
 import 'package:flutter/material.dart';
 
-class ListProductos extends StatelessWidget{
+import 'package:app_gustilandia/src/model/producto_model.dart';
+import 'package:app_gustilandia/src/pages/details_product.dart';
 
-  final List<Producto> producto;
+class ListProducts extends StatelessWidget {
 
-  const ListProductos(this.producto);
+  final List<Producto> producto; 
+  const ListProducts(this.producto);
 
   @override
   Widget build(BuildContext context) {
-
-    return ListView.builder(
+    return GridView.builder(
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        crossAxisSpacing: 0.5,
+        mainAxisSpacing: 0.5,
+        childAspectRatio: 0.7
+      ),
       itemCount: producto.length,
       itemBuilder: (BuildContext context, index){
         return _TarjetaTopBar(producto[index]);
       },
     );
   }
-
 }
+
 
 class _TarjetaTopBar extends StatelessWidget {
 
@@ -42,6 +47,7 @@ class _TarjetaTopBar extends StatelessWidget {
         );
       },
       child: Container(
+        height: 300.0,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5.0),
           color: Colors.white,
@@ -55,31 +61,45 @@ class _TarjetaTopBar extends StatelessWidget {
           ]
         ),
         margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
-        child: Column(
-          //crossAxisAlignment: CrossAxisAlignment.start,
-          //mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            _showImage(producto),
-            Column(
-              children: [
-                SizedBox(height: 10.0,),
-                Text(
+          child: Column(
+            children: [
+              _showImage(producto),
+              SizedBox(height: 5.0,),
+              Padding(
+                padding: EdgeInsets.all(5.0),
+                child: Column(
+                  children: [
+                    Text(
                   producto.nameProduct, 
                   maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.bold,
-                    fontSize: 18
+                    fontSize: 18,
                   ),
                 ),
-                SizedBox(height: 10.0,),
+                SizedBox(height: 5.0,),
+                Text(
+                  producto.descripcion, 
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.grey,
+                  ),
+                ),
+                SizedBox(height: 5.0,),
                 _showPrice(producto),
-                SizedBox(height: 20.0,),
-              ],
-            ),
-          ],
+                SizedBox(height: 5.0,),
+                  ],
+                ),
+              )
+              
+            ],
+          ),
         ),
-      ),
     );
   }
 }
@@ -89,12 +109,12 @@ class _TarjetaTopBar extends StatelessWidget {
 Widget _showPrice(Producto producto){
   if(producto.precio != null){
       return Text(
-      'S/ ${producto.precio}',
+      'S/ ${producto.precio.toStringAsFixed(2)}',
       maxLines: 1,
-      textAlign: TextAlign.left,
+      textAlign: TextAlign.center,
       style: TextStyle(
         fontWeight: FontWeight.bold,
-        fontSize: 30,
+        fontSize: 25,
         color: Colors.blue
       ),
     );
@@ -116,6 +136,7 @@ Widget _showImage(Producto producto) {
 
   producto.uniqueId = '${producto.idProducto}-gusti';
 
+  if(producto.imagen != null && producto.imagen != ''){ 
   return Hero(
     tag: producto.uniqueId,
     child: Container(
@@ -127,7 +148,7 @@ Widget _showImage(Producto producto) {
       child: ClipRRect(
         borderRadius: BorderRadius.only(topLeft: Radius.circular(5.0), topRight: Radius.circular(5.0)),
         child: FadeInImage(
-          height: 220,
+          height: 130,
           width: double.infinity,
           image: new NetworkImage(producto.getImagen(producto.imagen)),
           placeholder: AssetImage('assets/images/giphy.gif'),
@@ -138,33 +159,17 @@ Widget _showImage(Producto producto) {
       ),
     ),
   );
-
-  // if(producto.imagen != null && producto.imagen != ''){
-  //   return Container(
-  //     child: ClipRRect(
-  //       borderRadius: BorderRadius.only(topLeft: Radius.circular(5.0), topRight: Radius.circular(5.0)),
-  //       child: FadeInImage(
-  //         height: 220,
-  //         width: double.infinity,
-  //         image: new NetworkImage(producto.getImagen(producto.imagen)),
-  //         placeholder: AssetImage('assets/images/giphy.gif'),
-  //         fit: BoxFit.fill,
-  //         fadeOutDuration: Duration(milliseconds: 300),
-  //         fadeInCurve: Curves.easeInToLinear,
-  //       ),
-  //     ),
-  //   );
-  // }else{//probar si esta de mas
-  //   return Container(
-  //     child: ClipRRect(
-  //       borderRadius: BorderRadius.only(topLeft: Radius.circular(5.0), topRight: Radius.circular(5.0)),
-  //       child: Image(
-  //         width: double.infinity,
-  //         height: 220,
-  //         image: AssetImage('assets/images/no-image-available.png'),
-  //         fit: BoxFit.fill,
-  //       ),
-  //     ),
-  //   );
-  // }
+  }else{
+    return Container(
+      child: ClipRRect(
+        borderRadius: BorderRadius.only(topLeft: Radius.circular(5.0), topRight: Radius.circular(5.0)),
+        child: Image(
+          width: double.infinity,
+          height: 220,
+          image: AssetImage('assets/images/no-image-available.png'),
+          fit: BoxFit.fill,
+        ),
+      ),
+    );
+  }
 }
