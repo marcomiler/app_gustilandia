@@ -1,10 +1,10 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PreferenciasUsuario {
+  static final PreferenciasUsuario _instancia =
+      new PreferenciasUsuario._internal();
 
-  static final PreferenciasUsuario _instancia = new PreferenciasUsuario._internal();
-
-  factory PreferenciasUsuario(){
+  factory PreferenciasUsuario() {
     return _instancia;
   }
 
@@ -16,37 +16,43 @@ class PreferenciasUsuario {
     this._prefs = await SharedPreferences.getInstance();
   }
 
+  get getToken {
+    return _prefs.getString('token');
+  }
+
+  set setToken(String value) {
+    _prefs.setString('token', value);
+  }
+
   get getIdClient {
     return _prefs.getInt('idCliente');
   }
 
-  set setIdClient(int value){
+  set setIdClient(int value) {
     _prefs.setInt('idCliente', value);
   }
 
-
-  get getNameClient{
+  get getNameClient {
     return _prefs.getString('nameClient');
   }
 
-  set setNameClient(String value){
+  set setNameClient(String value) {
     _prefs.setString('nameClient', value);
   }
 
-   get getCorreoClient{
+  get getCorreoClient {
     return _prefs.getString('correoClient');
   }
 
-  set setCorreoClient(String value){
+  set setCorreoClient(String value) {
     _prefs.setString('correoClient', value);
-  } 
-
-  get getPasswordClient{
-    return _prefs.getString('passwordClient');
   }
 
-  set setPasswordClient(String value){
-    _prefs.setString('passwordClient', value);
-  } 
+  // get getPasswordClient {
+  //   return _prefs.getString('passwordClient');
+  // }
 
+  // set setPasswordClient(String value) {
+  //   _prefs.setString('passwordClient', value);
+  // }
 }
