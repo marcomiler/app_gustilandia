@@ -3,12 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class TabShop extends StatelessWidget {
-
   TabShop();
 
   @override
   Widget build(BuildContext context) {
-
     final shopService = Provider.of<ShopService>(context);
 
     return SafeArea(
@@ -25,12 +23,14 @@ class TabShop extends StatelessWidget {
             ),
           ),
           actions: <Widget>[
-            shopService.itemsShop.length == 0 ? SizedBox()
-            :TextButton(
-              child: Text('Vaciar carrito', style: TextStyle(color: Colors.red, fontSize: 13)),
-              onPressed: shopService.removeAll,
-            ),
-          ], 
+            shopService.itemsShop.length == 0
+                ? SizedBox()
+                : TextButton(
+                    child: Text('Vaciar carrito',
+                        style: TextStyle(color: Colors.red, fontSize: 13)),
+                    onPressed: shopService.removeAll,
+                  ),
+          ],
         ),
         body: shopService.itemsShop.length == 0 ? _EmptyCart() : _FullCart(),
       ),
@@ -39,12 +39,10 @@ class TabShop extends StatelessWidget {
 }
 
 class _FullCart extends StatelessWidget {
-
-   _FullCart();
+  _FullCart();
 
   @override
   Widget build(BuildContext context) {
-
     final shopService = Provider.of<ShopService>(context);
 
     return Container(
@@ -60,7 +58,7 @@ class _FullCart extends StatelessWidget {
                 itemExtent: 230,
                 scrollDirection: Axis.horizontal,
                 itemCount: shopService.itemsShop.length,
-                itemBuilder: (context, index){
+                itemBuilder: (context, index) {
                   final producto = shopService.itemsShop[index];
                   return _ShoopingCartProduct(
                     productItem: producto,
@@ -78,56 +76,78 @@ class _FullCart extends StatelessWidget {
                 color: Colors.white,
                 child: Padding(
                   padding: EdgeInsets.all(20.0),
-                  child: Column(  
+                  child: Column(
                     //crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: <Widget>[
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                        Text('Cant. total de productos', style: TextStyle(color: Colors.black, fontSize: 15),),
-                        SizedBox(height: 10.0,),
-                        Text('${shopService.totalProducts}', style: TextStyle(color: Colors.black, fontSize: 15)),
-                        ]
-                      ),
-                      SizedBox(height: 5.0,),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                        Text('Sub total', style: TextStyle(color: Colors.black, fontSize: 15),),
-                        Text('S/ ${shopService.subtotal.toStringAsFixed(2)}', style: TextStyle(color: Colors.black, fontSize: 15)),
-                        ]
-                      ),
-                      SizedBox(height: 5.0,),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                        Text('Igv(16%)', style: TextStyle(color: Colors.black, fontSize: 15),),
-                        SizedBox(height: 10.0,),
-                        Text('S/ ${shopService.igv.toStringAsFixed(2)}', style: TextStyle(color: Colors.black, fontSize: 15)),
-                        ]
-                      ),
-                      SizedBox(height: 5.0,), 
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          Text(
-                            'Total:', 
-                            style: TextStyle(
-                              color: Colors.black, 
-                              fontSize: 25,
-                              fontWeight: FontWeight.bold
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Text(
+                              'Cant. total de productos',
+                              style:
+                                  TextStyle(color: Colors.black, fontSize: 15),
                             ),
-                          ),
-                          Text(
-                            'S/ ${shopService.totalPriceCart.toStringAsFixed(2)}',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 25,
-                              fontWeight: FontWeight.bold
-                            )
-                          ),
-                        ]
+                            SizedBox(
+                              height: 10.0,
+                            ),
+                            Text('${shopService.totalProducts}',
+                                style: TextStyle(
+                                    color: Colors.black, fontSize: 15)),
+                          ]),
+                      SizedBox(
+                        height: 5.0,
                       ),
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Text(
+                              'Sub total',
+                              style:
+                                  TextStyle(color: Colors.black, fontSize: 15),
+                            ),
+                            Text(
+                                'S/ ${shopService.subtotal.toStringAsFixed(2)}',
+                                style: TextStyle(
+                                    color: Colors.black, fontSize: 15)),
+                          ]),
+                      SizedBox(
+                        height: 5.0,
+                      ),
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Text(
+                              'Igv(16%)',
+                              style:
+                                  TextStyle(color: Colors.black, fontSize: 15),
+                            ),
+                            SizedBox(
+                              height: 10.0,
+                            ),
+                            Text('S/ ${shopService.igv.toStringAsFixed(2)}',
+                                style: TextStyle(
+                                    color: Colors.black, fontSize: 15)),
+                          ]),
+                      SizedBox(
+                        height: 5.0,
+                      ),
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Text(
+                              'Total:',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 25,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            Text(
+                                'S/ ${shopService.totalPriceCart.toStringAsFixed(2)}',
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 25,
+                                    fontWeight: FontWeight.bold)),
+                          ]),
                       Spacer(),
                       Container(
                         alignment: Alignment.center,
@@ -137,8 +157,7 @@ class _FullCart extends StatelessWidget {
                         ),
                         width: double.infinity,
                         height: 50,
-                        child: 
-                        InkWell(
+                        child: InkWell(
                           child: Text(
                             'Finalizar compra',
                             style: TextStyle(
@@ -148,10 +167,12 @@ class _FullCart extends StatelessWidget {
                             ),
                             textAlign: TextAlign.center,
                           ),
-                          onTap: (){
-                            _finallizedShop(context);
+                          onTap: () {
+                            Navigator.pushNamed(
+                              context,
+                              'finish-pay',
+                            );
                           },
-                          
                         ),
                       )
                     ],
@@ -160,131 +181,132 @@ class _FullCart extends StatelessWidget {
               ),
             ),
           )
-        ] ,
+        ],
       ),
     );
   }
 }
 
 class _ShoopingCartProduct extends StatelessWidget {
-
-  
   _ShoopingCartProduct({Key key, this.productItem}) : super(key: key);
 
   final ProductItem productItem;
 
   @override
   Widget build(BuildContext context) {
-
     final shopService = Provider.of<ShopService>(context);
 
     return Padding(
       padding: EdgeInsets.all(10.0),
-        child: Stack(
-          children: <Widget>[
-          Card(
-            color: Colors.white,
-            elevation: 8,
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
-            child: Padding( 
-              padding: EdgeInsets.all(10.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  Expanded(
+      child: Stack(children: <Widget>[
+        Card(
+          color: Colors.white,
+          elevation: 8,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
+          child: Padding(
+            padding: EdgeInsets.all(10.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                Expanded(
                     flex: 2,
                     child: CircleAvatar(
                       child: ClipOval(
                         child: FadeInImage(
                           height: 150.0,
                           width: 150.0,
-                          image: new NetworkImage(productItem.product.getImagen(productItem.product.imagen)),
+                          image: new NetworkImage(productItem.product
+                              .getImagen(productItem.product.imagen)),
                           placeholder: AssetImage('assets/images/giphy.gif'),
                           fit: BoxFit.fill,
                           fadeOutDuration: Duration(milliseconds: 300),
                           fadeInCurve: Curves.easeInToLinear,
                         ),
                       ),
-                    )
-                  ),
-                  SizedBox(height: 10.0,),
-                  Expanded(
-                    flex: 3,
-                    child: Column(
-                      children: <Widget>[
-                        Text(
-                          productItem.product.nameProduct,
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 2,
-                          style: TextStyle(
-                            fontSize: 22,
-                            fontWeight: FontWeight.bold
-                          ),
+                    )),
+                SizedBox(
+                  height: 10.0,
+                ),
+                Expanded(
+                  flex: 3,
+                  child: Column(
+                    children: <Widget>[
+                      Text(
+                        productItem.product.nameProduct,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 2,
+                        style: TextStyle(
+                            fontSize: 22, fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(
+                        height: 10.0,
+                      ),
+                      Text(
+                        productItem.product.descripcion,
+                        style: TextStyle(
+                          color: Colors.grey,
                         ),
-                        SizedBox(height: 10.0,),
-                        Text(
-                          productItem.product.descripcion,
-                          style: TextStyle(
-                            color: Colors.grey,
-                          ),
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        SizedBox(height: 10.0,),
-                        Padding(
-                          padding: EdgeInsets.all(5.0),
-                          child: Row(
-                            children: <Widget>[
-                              Container(
-                                decoration: BoxDecoration(
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      SizedBox(
+                        height: 10.0,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(5.0),
+                        child: Row(
+                          children: <Widget>[
+                            Container(
+                              decoration: BoxDecoration(
                                   color: Colors.cyan,
-                                  borderRadius: BorderRadius.circular(4)
+                                  borderRadius: BorderRadius.circular(4)),
+                              child: InkWell(
+                                child: Icon(
+                                  Icons.remove,
+                                  color: Colors.white,
                                 ),
-                                child: InkWell(
-                                  child: Icon(Icons.remove, color: Colors.white,),
-                                  onTap: () => shopService.substract(productItem),
-                                ),
+                                onTap: () => shopService.substract(productItem),
                               ),
-                              Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 5.0),
-                                child: Text(
-                                  '${productItem.quantity}',
-                                  style: TextStyle(
-                                    color: Colors.black
-                                  ),
-                                ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 5.0),
+                              child: Text(
+                                '${productItem.quantity}',
+                                style: TextStyle(color: Colors.black),
                               ),
-                              Container(
-                                decoration: BoxDecoration(
+                            ),
+                            Container(
+                              decoration: BoxDecoration(
                                   color: Colors.blue,
-                                  borderRadius: BorderRadius.circular(4)
+                                  borderRadius: BorderRadius.circular(4)),
+                              child: InkWell(
+                                child: Icon(
+                                  Icons.add,
+                                  color: Colors.white,
                                 ),
-                                child: InkWell(
-                                  child: Icon(Icons.add, color: Colors.white,),
-                                  onTap: () => shopService.increment(productItem),
-                                ),
-                              ), 
-                              Spacer(),
-                              Text(
-                                'S/ ${(productItem.quantity * productItem.product.precio).toStringAsFixed(2)}',
-                                style: TextStyle(  
+                                onTap: () => shopService.increment(productItem),
+                              ),
+                            ),
+                            Spacer(),
+                            Text(
+                              'S/ ${(productItem.quantity * productItem.product.precio).toStringAsFixed(2)}',
+                              style: TextStyle(
                                   color: Colors.blue,
                                   fontSize: 23,
-                                  fontWeight: FontWeight.bold
-                                ),
-                              ),
-                            ],  
-                          ),
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-
-                ],
-              ),
+                ),
+              ],
             ),
           ),
-          Positioned(
+        ),
+        Positioned(
             right: 0,
             child: InkWell(
               onTap: () => shopService.remove(productItem),
@@ -292,49 +314,48 @@ class _ShoopingCartProduct extends StatelessWidget {
                 backgroundColor: Colors.pink,
                 child: Icon(Icons.delete_outline, color: Colors.white),
               ),
-            )
-          )
-        ]
-      ),
+            ))
+      ]),
     );
   }
 }
 
-void _finallizedShop(BuildContext context){
+void _finallizedShop(BuildContext context) {
   showDialog(
-    context: context, 
-    barrierDismissible: true,
-    builder: (context){
-      return AlertDialog(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
-        title: Text("Completa los datos para finalizar tu compra"),
-        scrollable: true,
-        content: Column(
-          mainAxisSize: MainAxisSize.min,//para q se adapte al contenido interno
-          children: <Widget>[
-            Text('Aquí se mostraran los campos a completar para finalizar la compra'),
-            FlutterLogo(size: 100.0,)
-          ]
-        ),
-        actions: <Widget>[
-          TextButton(
-            child: Text('Cancelar'),
-            onPressed: () => Navigator.of(context).pop(),
-          ),
-          TextButton(
-            child: Text('Ok'),
-            onPressed: ()  => Navigator.of(context).pop(),
-          )              
-        ],
-      );
-    }
-  );  
+      context: context,
+      barrierDismissible: true,
+      builder: (context) {
+        return AlertDialog(
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+          title: Text("Completa los datos para finalizar tu compra"),
+          scrollable: true,
+          content: Column(
+              mainAxisSize:
+                  MainAxisSize.min, //para q se adapte al contenido interno
+              children: <Widget>[
+                Text(
+                    'Aquí se mostraran los campos a completar para finalizar la compra'),
+                FlutterLogo(
+                  size: 100.0,
+                )
+              ]),
+          actions: <Widget>[
+            TextButton(
+              child: Text('Cancelar'),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
+            TextButton(
+              child: Text('Ok'),
+              onPressed: () => Navigator.of(context).pop(),
+            )
+          ],
+        );
+      });
 }
 
-
 class _EmptyCart extends StatelessWidget {
-   
-   _EmptyCart();
+  _EmptyCart();
 
   @override
   Widget build(BuildContext context) {
@@ -347,38 +368,37 @@ class _EmptyCart extends StatelessWidget {
             'assets/images/carritoVacio.png',
             height: 120,
           ),
-          SizedBox(height: 20,),
+          SizedBox(
+            height: 20,
+          ),
           Text(
             'No hay productos en el carrito',
             textAlign: TextAlign.center,
-            style: TextStyle( 
-              fontSize: 25.0,
-              color: Colors.black54
-            ),
+            style: TextStyle(fontSize: 25.0, color: Colors.black54),
           ),
-          SizedBox(height: 20,),
+          SizedBox(
+            height: 20,
+          ),
           Center(
             child: ElevatedButton(
               style: ButtonStyle(
                 elevation: MaterialStateProperty.all(5),
                 shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20)
-                )),
-                backgroundColor: MaterialStateProperty.all(Colors.redAccent.shade100),
+                    borderRadius: BorderRadius.circular(20))),
+                backgroundColor:
+                    MaterialStateProperty.all(Colors.redAccent.shade100),
               ),
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 8.0),
                 child: Text(
                   'Ir a comprar',
-                  style: TextStyle(
-                    color: Colors.white
-                  ),
+                  style: TextStyle(color: Colors.white),
                 ),
               ),
-              onPressed: (){
+              onPressed: () {
                 Navigator.pushNamed(context, 'navigation');
               },
-            ),  
+            ),
           )
         ],
       ),

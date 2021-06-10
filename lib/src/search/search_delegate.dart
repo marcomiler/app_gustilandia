@@ -102,7 +102,7 @@ class DataSearch extends SearchDelegate{
           return Center( 
             child: CircularProgressIndicator(
               valueColor: AlwaysStoppedAnimation<Color> (Colors.red),
-              strokeWidth: 6.0,
+              strokeWidth: 5.0,
             ),
           );
         } 

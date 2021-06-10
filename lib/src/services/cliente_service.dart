@@ -59,12 +59,14 @@ class ClienteService with ChangeNotifier {
     Map<String, dynamic> decodeResp = json.decode(body);
 
     if (decodeResp["result"] != null) {
-      final int idClient = decodeResp["result"]["idCliente"];
-      final String nameRes = decodeResp["result"]["nombreCompleto"];
-      final String correoRes = decodeResp["result"]["correo"];
-      //final String passwordRes = decodeResp["result"]["documentoIdentidad"]["documentoIdentidad"];
+      final int idClient = decodeResp["result"]['id'];
+      final String nameRes = decodeResp["result"]['nombre'];
+      final String correoRes = decodeResp["result"]["usuario"];
+      final String token = decodeResp["result"]["token"];
 
-      saveInfoClient(id: idClient, name: nameRes, email: correoRes);
+      //final String passwordRes = decodeResp["result"]["documentoIdentidad"]["documentoIdentidad"];
+      print(decodeResp["result"]);
+      saveInfoClient(id: idClient, name: nameRes, email: correoRes, token: token);
       notifyListeners();
       return true;
     } else {

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:app_gustilandia/src/services/cliente_service.dart';
 import 'package:app_gustilandia/src/services/validation_signup.dart';
+import 'package:app_gustilandia/src/utils/my_progress_dialog.dart';
 import 'package:app_gustilandia/src/utils/utils.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -108,6 +110,8 @@ class _RegisterPageState extends State<RegisterPage> {
     final clienteService = Provider.of<ClienteService>(context, listen: false);
     final validationService =
         Provider.of<ValidationSignUpService>(context, listen: false);
+    ProgressDialog _progressDialog =
+        MyProgressDialog.createProgressDialog(context, "Espere un momento...");
 
     if (!keyForm.currentState.validate()) return;
 
@@ -116,9 +120,11 @@ class _RegisterPageState extends State<RegisterPage> {
     final email = validationService.email.value;
     final password = validationService.password.value;
 
+    _progressDialog.show();
     bool register = await clienteService.registerClient(name, email, password);
-
+    _progressDialog.hide();
     if (!register) {
+      _progressDialog.hide();
       mostrarAlerta(context, clienteService.messageError);
     } else {
       Navigator.pushReplacementNamed(context, 'navigation');

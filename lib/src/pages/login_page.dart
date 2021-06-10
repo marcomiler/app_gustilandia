@@ -1,4 +1,6 @@
+import 'package:app_gustilandia/src/utils/my_progress_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 import 'package:provider/provider.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -110,26 +112,22 @@ class _LoginPageState extends State<LoginPage> {
     final clienteService = Provider.of<ClienteService>(context, listen: false);
     final validationService =
         Provider.of<ValidationSignUpService>(context, listen: false);
+    ProgressDialog _progressDialog =
+        MyProgressDialog.createProgressDialog(context, "Espere un momento...");
 
     if (!keyFormLogin.currentState.validate()) return;
     keyFormLogin.currentState.save();
     final email = validationService.email.value;
     final password = validationService.password.value;
 
+    _progressDialog.show();
     bool login = await clienteService.loginCliente(email, password);
+    _progressDialog.hide();
     if (!login) {
+      _progressDialog.hide();
       mostrarAlerta(context, clienteService.messageError);
     } else {
-      // clienteService.isLoading
-      //     ? print("Cargando")
-      //     // Container(
-      //     //     color: Colors.transparent,
-      //     //     child: Center(
-      //     //         child: CircularProgressIndicator(
-      //     //       backgroundColor: Colors.red,
-      //     //     )),
-      //     //   )
-      //     : Navigator.pushReplacementNamed(context, 'navigation');
+      _progressDialog.hide();
       Navigator.pushReplacementNamed(context, 'navigation');
     }
   }

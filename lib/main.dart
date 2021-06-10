@@ -51,7 +51,7 @@ class _MyAppState extends State<MyApp> {
       child: MaterialApp(
         theme: mytheme,
         debugShowCheckedModeBanner: false,
-        // initialRoute: 'login',
+        //initialRoute: 'finish-pay',
         initialRoute: _prefs.getToken != null ? 'navigation' : 'login',
         routes: getAplicationRoutes(),
         onGenerateRoute: (RouteSettings settings) {
