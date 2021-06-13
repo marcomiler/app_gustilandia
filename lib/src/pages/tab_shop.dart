@@ -132,22 +132,23 @@ class _FullCart extends StatelessWidget {
                         height: 5.0,
                       ),
                       Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Text(
-                              'Total:',
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Text(
+                            'Total:',
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 25,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          Text(
+                              'S/ ${shopService.totalPriceCart.toStringAsFixed(2)}',
                               style: TextStyle(
                                   color: Colors.black,
                                   fontSize: 25,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            Text(
-                                'S/ ${shopService.totalPriceCart.toStringAsFixed(2)}',
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 25,
-                                    fontWeight: FontWeight.bold)),
-                          ]),
+                                  fontWeight: FontWeight.bold)),
+                        ],
+                      ),
                       Spacer(),
                       Container(
                         alignment: Alignment.center,

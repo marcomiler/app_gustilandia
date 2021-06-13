@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'package:app_gustilandia/src/theme/theme.dart';
 import 'package:app_gustilandia/src/pages/tabs_page.dart';
@@ -52,12 +53,19 @@ class _MyAppState extends State<MyApp> {
         theme: mytheme,
         debugShowCheckedModeBanner: false,
         //initialRoute: 'finish-pay',
-        initialRoute: _prefs.getToken != null ? 'navigation' : 'login',
+        initialRoute: _prefs.getToken != null && _prefs.getToken != ""
+            ? 'navigation'
+            : 'login',
         routes: getAplicationRoutes(),
         onGenerateRoute: (RouteSettings settings) {
           return MaterialPageRoute(
               builder: (BuildContext context) => TabsPage());
         },
+        localizationsDelegates: [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate
+        ],
+        supportedLocales: [const Locale('es', 'ES'), const Locale('en', 'US')],
       ),
     );
   }

@@ -122,6 +122,54 @@ Widget _buttonAlert(BuildContext context, String text, Color bgColorBtn,
   );
 }
 
+void showHelpCvv(BuildContext context) {
+  showDialog(
+    barrierDismissible: true,
+    context: context,
+    builder: (context) {
+      return AlertDialog(
+        contentPadding: EdgeInsets.fromLTRB(15, 15, 15, 0),
+        content: Container(
+          height: 300,
+          decoration: BoxDecoration(borderRadius: BorderRadius.circular(5.0)),
+          //padding: EdgeInsets.all(5),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              Text(
+                'El código de seguridad o CVV son tres dígitos de los siete que aparecen en el reverso de la tarjeta. \n \n Imagen de referencia:',
+                textAlign: TextAlign.left,
+                style: TextStyle(
+                    color: Colors.black54,
+                    fontSize: 17,
+                    fontWeight: FontWeight.bold),
+              ),
+              Image.asset(
+                "assets/images/cvv3.jpg",
+                width: 150,
+                height: 150,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  TextButton(
+                    child: Text(
+                      'Ok',
+                      style: TextStyle(fontSize: 20),
+                    ),
+                    onPressed: () => Navigator.of(context).pop(),
+                  )
+                ],
+              )
+            ],
+          ),
+        ),
+      );
+    },
+  );
+}
+
 void showSnackBar(BuildContext context) {
   final snackbar = SnackBar(
     content: Text("El producto se agregó al carrito"),

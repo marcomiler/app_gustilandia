@@ -103,11 +103,6 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Future fetchStr() async {
-    await new Future.delayed(const Duration(seconds: 3), () {});
-    return 'Hello World';
-  }
-
   void _login(BuildContext context) async {
     final clienteService = Provider.of<ClienteService>(context, listen: false);
     final validationService =
