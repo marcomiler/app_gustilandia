@@ -170,9 +170,9 @@ void showHelpCvv(BuildContext context) {
   );
 }
 
-void showSnackBar(BuildContext context) {
+void showSnackBar(BuildContext context, text) {
   final snackbar = SnackBar(
-    content: Text("El producto se agregó al carrito"),
+    content: Text(text),
     duration: Duration(milliseconds: 1500),
     shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(50))),

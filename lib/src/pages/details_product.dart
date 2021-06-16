@@ -42,7 +42,7 @@ class DetailsProduct extends StatelessWidget {
           ),
           backgroundColor: Colors.redAccent,
           onPressed: () {
-            showSnackBar(context);
+            showSnackBar(context, "El producto se agregó al carrito");
             shopService.addProduct(producto);
             Navigator.pop(context);
           }),

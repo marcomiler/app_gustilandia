@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:app_gustilandia/src/model/validation_item.dart';
 
 class ValidationAddDistritoService with ChangeNotifier {
-  ValidationDistrito _distrito = new ValidationDistrito(null, null);
-  ValidationDistrito _direccion = new ValidationDistrito(null, null);
-  ValidationDistrito _referencia = new ValidationDistrito(null, null);
+  ValidationDistrito _distrito = ValidationDistrito(null, null);
+  ValidationDistrito _direccion = ValidationDistrito(null, null);
+  ValidationDistrito _referencia = ValidationDistrito(null, null);
 
   ValidationDistrito get distrito => _distrito;
   ValidationDistrito get direccion => _direccion;

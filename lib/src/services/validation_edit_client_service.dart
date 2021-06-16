@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:app_gustilandia/src/model/validation_item.dart';
 
 class ValidationEditClientService with ChangeNotifier {
-  ValidationItem _phone = new ValidationItem(null, null);
-  ValidationItem _email = new ValidationItem(null, null);
-  ValidationItem _direction = new ValidationItem(null, null);
-  ValidationItem _idDistrito = new ValidationItem(null, null);
-  ValidationItem _fullName = new ValidationItem(null, null);
-  ValidationItem _dni = new ValidationItem(null, null);
-  ValidationItem _reference = new ValidationItem(null, null);
+  ValidationItem _phone = ValidationItem(null, null);
+  ValidationItem _email = ValidationItem(null, null);
+  ValidationItem _direction = ValidationItem(null, null);
+  ValidationItem _idDistrito = ValidationItem(null, null);
+  ValidationItem _fullName = ValidationItem(null, null);
+  ValidationItem _dni = ValidationItem(null, null);
+  ValidationItem _reference = ValidationItem(null, null);
 
   //Getters
   ValidationItem get phone => _phone;
@@ -74,7 +74,7 @@ class ValidationEditClientService with ChangeNotifier {
 
   void changeDistrito(int value) {
     if (value.toString().isEmpty || value.toString().length == 0) {
-      ValidationItem(null, "debe seleccionar un distrito");
+      _idDistrito = ValidationItem(null, "debe seleccionar un distrito");
     } else {
       _idDistrito = ValidationItem(value.toString(), null);
     }

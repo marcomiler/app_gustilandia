@@ -124,6 +124,8 @@ class _FinishPayPageState extends State<FinishPayPage> {
         } else {
           _progressDialog.hide();
           lstProductos.clear();
+          showSnackBar(
+              context, "Compra exitosa, revise sus ordenes en su perfil!");
           Navigator.pushReplacementNamed(context, 'navigation');
         }
       } else {

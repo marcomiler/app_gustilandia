@@ -92,7 +92,7 @@ class ClienteService with ChangeNotifier {
       "idCliente": _prefs.getIdClient
     };
 
-    final resp = await http.post(Uri.parse('$_URL_GUSTILANDIA/cliente'),
+    final resp = await http.put(Uri.parse('$_URL_GUSTILANDIA/cliente'),
         headers: {
           'content-type': 'application/json',
           'Authorization': _prefs.getToken
@@ -104,12 +104,10 @@ class ClienteService with ChangeNotifier {
 
     if (decodeResp["result"] != null) {
       print(decodeResp["result"]);
-      final int idClient = decodeResp["result"]['id'];
-      final String nameRes = decodeResp["result"]['nombre'];
-      final String correoRes = decodeResp["result"]["usuario"];
-      //final String token = decodeResp["result"]["token"];
+      final int idClient = decodeResp["result"]['idCliente'];
+      final String nameRes = decodeResp["result"]['nombreCompleto'];
+      final String correoRes = decodeResp["result"]["correo"];
 
-      //final String passwordRes = decodeResp["result"]["documentoIdentidad"]["documentoIdentidad"];
       print(decodeResp["result"]);
       saveInfoClient(id: idClient, name: nameRes, email: correoRes);
       notifyListeners();

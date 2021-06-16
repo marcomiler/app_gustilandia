@@ -20,18 +20,20 @@ class _EditProfileState extends State<EditProfile> {
 
   @override
   Widget build(BuildContext context) {
-    final validateService =
-        Provider.of<ValidationEditClientService>(context, listen: false);
+    final validateService = Provider.of<ValidationEditClientService>(context);
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.black),
         backgroundColor: Colors.white,
-        elevation: 7,
         centerTitle: true,
+        elevation: 7,
         title: Text(
-          'Editar Perfil',
-          style: TextStyle(color: Colors.redAccent.shade200),
+          "Editar Perfil",
+          style: TextStyle(
+            color: Colors.redAccent.shade200,
+            fontWeight: FontWeight.bold,
+          ),
         ),
       ),
       body: Form(
@@ -39,20 +41,26 @@ class _EditProfileState extends State<EditProfile> {
         child: ListView(
           padding: EdgeInsets.all(10),
           children: [
-            SizedBox(height: 10),
-            _inputPhone(validateService),
-            SizedBox(height: 10),
-            _inputEmail(validateService),
-            SizedBox(height: 10),
-            _inputDirection(validateService),
-            SizedBox(height: 10),
+            _titleProfile(),
+            SizedBox(height: 15),
             _inputFullName(validateService),
-            SizedBox(height: 10),
-            _dropDownDistrict(validateService),
-            SizedBox(height: 10),
+            SizedBox(height: 15),
+            _inputEmail(validateService),
+            SizedBox(height: 15),
             _inputDNI(validateService),
+            SizedBox(height: 15),
+            _inputPhone(validateService),
+            SizedBox(height: 15),
+            _dropDownDistrict(validateService),
+            SizedBox(height: 15),
+            _inputDirection(validateService),
+            SizedBox(height: 15),
+            _inputReference(validateService),
+            SizedBox(height: 15),
+            _buttonEditProfile(validateService),
             SizedBox(height: 10),
-            _inputReference(validateService)
+            _buttonCancelProfile(context),
+            SizedBox(height: 15),
           ],
         ),
       ),
@@ -88,24 +96,41 @@ class _EditProfileState extends State<EditProfile> {
     }
   }
 
-  Widget _inputPhone(ValidationEditClientService validate) {
+  Widget _titleProfile() {
+    return Container(
+      padding: EdgeInsets.all(10),
+      child: Text(
+        'Usted puede editar la información de su perfil completando el formulario con sus datos personales y guardando los cambios.',
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          fontWeight: FontWeight.w600,
+          color: Colors.black54,
+          fontSize: 20,
+        ),
+      ),
+    );
+  }
+
+  Widget _inputFullName(ValidationEditClientService validate) {
     return TextFormField(
       style: TextStyle(
         fontSize: 18,
       ),
       //cursorColor: Colors.redAccent.shade100,
-      keyboardType: TextInputType.number,
+      keyboardType: TextInputType.text,
+      textCapitalization: TextCapitalization.words,
       onChanged: (String value) {
-        validate.changePhone(value);
+        validate.changeFullName(value);
       },
       decoration: InputDecoration(
         contentPadding: EdgeInsets.symmetric(horizontal: 10),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
         ),
-        errorText: validate.phone.error,
+        errorText: validate.fullName.error,
+        labelText: "Nombre completo",
         prefixIconConstraints: BoxConstraints(minWidth: 30, minHeight: 25),
-        prefixIcon: Icon(Icons.phone),
+        prefixIcon: Icon(Icons.person),
         prefixStyle: TextStyle(color: Colors.grey),
         hintStyle: TextStyle(color: Colors.grey, fontSize: 12.0),
         labelStyle: TextStyle(color: Colors.grey, fontSize: 12.0),
@@ -129,9 +154,38 @@ class _EditProfileState extends State<EditProfile> {
           borderRadius: BorderRadius.circular(10.0),
         ),
         errorText: validate.email.error,
+        labelText: "Correo electrónico",
         prefixIconConstraints: BoxConstraints(minWidth: 30, minHeight: 25),
         prefixIcon: Icon(Icons.email),
         prefixStyle: TextStyle(color: Colors.grey),
+        hintStyle: TextStyle(color: Colors.grey, fontSize: 12.0),
+        labelStyle: TextStyle(color: Colors.grey, fontSize: 12.0),
+      ),
+    );
+  }
+
+  Widget _inputDNI(ValidationEditClientService validate) {
+    return TextFormField(
+      style: TextStyle(
+        fontSize: 18,
+      ),
+      //cursorColor: Colors.redAccent.shade100,
+      keyboardType: TextInputType.number,
+      onChanged: (String value) {
+        validate.changeDNI(value);
+      },
+      maxLength: 8,
+      decoration: InputDecoration(
+        contentPadding: EdgeInsets.symmetric(horizontal: 10),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        errorText: validate.dni.error,
+        labelText: "Documento de Identidad(DNI)",
+        prefixIconConstraints: BoxConstraints(minWidth: 30, minHeight: 25),
+        prefixIcon: Icon(Icons.crop_7_5_rounded),
+        prefixStyle: TextStyle(color: Colors.grey),
+        counterText: "",
         hintStyle: TextStyle(color: Colors.grey, fontSize: 12.0),
         labelStyle: TextStyle(color: Colors.grey, fontSize: 12.0),
       ),
@@ -154,33 +208,9 @@ class _EditProfileState extends State<EditProfile> {
           borderRadius: BorderRadius.circular(10.0),
         ),
         errorText: validate.direction.error,
+        labelText: "Dirección",
         prefixIconConstraints: BoxConstraints(minWidth: 30, minHeight: 25),
         prefixIcon: Icon(Icons.location_on_outlined),
-        prefixStyle: TextStyle(color: Colors.grey),
-        hintStyle: TextStyle(color: Colors.grey, fontSize: 12.0),
-        labelStyle: TextStyle(color: Colors.grey, fontSize: 12.0),
-      ),
-    );
-  }
-
-  Widget _inputFullName(ValidationEditClientService validate) {
-    return TextFormField(
-      style: TextStyle(
-        fontSize: 18,
-      ),
-      //cursorColor: Colors.redAccent.shade100,
-      keyboardType: TextInputType.text,
-      onChanged: (String value) {
-        validate.changeFullName(value);
-      },
-      decoration: InputDecoration(
-        contentPadding: EdgeInsets.symmetric(horizontal: 10),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10.0),
-        ),
-        errorText: validate.fullName.error,
-        prefixIconConstraints: BoxConstraints(minWidth: 30, minHeight: 25),
-        prefixIcon: Icon(Icons.person),
         prefixStyle: TextStyle(color: Colors.grey),
         hintStyle: TextStyle(color: Colors.grey, fontSize: 12.0),
         labelStyle: TextStyle(color: Colors.grey, fontSize: 12.0),
@@ -191,7 +221,6 @@ class _EditProfileState extends State<EditProfile> {
   Widget _dropDownDistrict(ValidationEditClientService validate) {
     final serviceDistrito = Provider.of<DistritoService>(context);
     return Container(
-      margin: EdgeInsets.only(left: 15, right: 15),
       child: FutureBuilder(
           future: serviceDistrito.getDistritos(),
           builder: (context, snapshot) {
@@ -232,7 +261,7 @@ class _EditProfileState extends State<EditProfile> {
     );
   }
 
-  Widget _inputDNI(ValidationEditClientService validate) {
+  Widget _inputPhone(ValidationEditClientService validate) {
     return TextFormField(
       style: TextStyle(
         fontSize: 18,
@@ -240,16 +269,17 @@ class _EditProfileState extends State<EditProfile> {
       //cursorColor: Colors.redAccent.shade100,
       keyboardType: TextInputType.number,
       onChanged: (String value) {
-        validate.changeDNI(value);
+        validate.changePhone(value);
       },
       decoration: InputDecoration(
         contentPadding: EdgeInsets.symmetric(horizontal: 10),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
         ),
-        errorText: validate.dni.error,
+        errorText: validate.phone.error,
+        labelText: "Celular",
         prefixIconConstraints: BoxConstraints(minWidth: 30, minHeight: 25),
-        prefixIcon: Icon(Icons.crop_7_5_rounded),
+        prefixIcon: Icon(Icons.phone),
         prefixStyle: TextStyle(color: Colors.grey),
         hintStyle: TextStyle(color: Colors.grey, fontSize: 12.0),
         labelStyle: TextStyle(color: Colors.grey, fontSize: 12.0),
@@ -267,12 +297,14 @@ class _EditProfileState extends State<EditProfile> {
       onChanged: (String value) {
         validate.changeReference(value);
       },
+      maxLines: 3,
       decoration: InputDecoration(
-        contentPadding: EdgeInsets.symmetric(horizontal: 10),
+        contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
         ),
         errorText: validate.reference.error,
+        labelText: "Referencia",
         prefixIconConstraints: BoxConstraints(minWidth: 30, minHeight: 25),
         prefixIcon: Icon(Icons.location_city),
         prefixStyle: TextStyle(color: Colors.grey),
@@ -295,7 +327,7 @@ class _EditProfileState extends State<EditProfile> {
         height: 50,
         child: InkWell(
             child: Text(
-          'Editar',
+          'Guardar Cambios',
           style: TextStyle(
             fontWeight: FontWeight.bold,
             color: Colors.white,
@@ -305,6 +337,32 @@ class _EditProfileState extends State<EditProfile> {
         )),
       ),
       onTap: !validate.isValid ? null : () => _fnEditProfile(),
+    );
+  }
+
+  Widget _buttonCancelProfile(BuildContext contexto) {
+    return GestureDetector(
+      child: Container(
+        margin: EdgeInsets.symmetric(horizontal: 15),
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(5.0),
+          color: Colors.blue,
+        ),
+        width: double.infinity,
+        height: 50,
+        child: InkWell(
+            child: Text(
+          'Cancelar',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+            fontSize: 25,
+          ),
+          textAlign: TextAlign.center,
+        )),
+      ),
+      onTap: () => Navigator.pushReplacementNamed(contexto, 'profile'),
     );
   }
 }
