@@ -46,10 +46,12 @@ class ValidationSignUpService with ChangeNotifier {
         r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
     RegExp regExp = new RegExp(pattern);
 
-    if (regExp.hasMatch(value)) {
-      _email = ValidationItem(value, null);
-    } else {
+    if (value.isEmpty || value.length == 0) {
+      _email = ValidationItem(null, "este campo es requerido");
+    } else if (!regExp.hasMatch(value)) {
       _email = ValidationItem(null, "debe ingresar un formato correcto");
+    } else {
+      _email = ValidationItem(value, null);
     }
     notifyListeners();
   }

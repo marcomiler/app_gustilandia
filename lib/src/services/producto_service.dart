@@ -12,32 +12,15 @@ final _URL_GUSTILANDIA = 'http://192.168.0.106:8085/backendgusti';
 
 class ProductoService with ChangeNotifier {
   String token = new PreferenciasUsuario().getToken;
-  //List<Producto> productos = [];
   String _selectedCategory = 'galleta rellena';
 
   bool _islLoading = true;
 
   List<CategoryTempModel> categories = [
-    CategoryTempModel(
-      1,
-      FontAwesomeIcons.cookie,
-      'galleta rellena',
-    ),
-    CategoryTempModel(
-      2,
-      FontAwesomeIcons.breadSlice,
-      'snack',
-    ),
-    CategoryTempModel(
-      3,
-      FontAwesomeIcons.stroopwafel,
-      'chocolate',
-    ),
-    CategoryTempModel(
-      4,
-      FontAwesomeIcons.coffee,
-      'gaseosa',
-    ),
+    CategoryTempModel(1, FontAwesomeIcons.cookie, 'galleta rellena'),
+    CategoryTempModel(2, FontAwesomeIcons.breadSlice, 'snack'),
+    CategoryTempModel(3, FontAwesomeIcons.stroopwafel, 'chocolate'),
+    CategoryTempModel(4, FontAwesomeIcons.coffee, 'gaseosa'),
     CategoryTempModel(5, FontAwesomeIcons.bacon, 'Mani'),
     CategoryTempModel(6, FontAwesomeIcons.hamburger, 'papas'),
     CategoryTempModel(7, FontAwesomeIcons.candyCane, ' galleta con chocolate'),

@@ -48,6 +48,14 @@ class PreferenciasUsuario {
     _prefs.setString('correoClient', value);
   }
 
+  get getDirectionClient {
+    return _prefs.getString('directionClient');
+  }
+
+  set setDirectionClient(String value) {
+    _prefs.setString('directionClient', value);
+  }
+
   // get getPasswordClient {
   //   return _prefs.getString('passwordClient');
   // }
