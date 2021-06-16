@@ -47,8 +47,8 @@ class _EditProfileState extends State<EditProfile> {
             SizedBox(height: 15),
             _inputEmail(validateService),
             SizedBox(height: 15),
-            _inputDNI(validateService),
-            SizedBox(height: 15),
+            // _inputDNI(validateService),
+            // SizedBox(height: 15),
             _inputPhone(validateService),
             SizedBox(height: 15),
             _dropDownDistrict(validateService),
@@ -81,18 +81,19 @@ class _EditProfileState extends State<EditProfile> {
     final direction = validateService.direction.value;
     final fullName = validateService.fullName.value;
     final idDistrito = int.parse(validateService.idDistrito.value);
-    final dni = validateService.dni.value;
+    //final dni = validateService.dni.value;
     final reference = validateService.reference.value;
 
     _progressDialog.show();
     bool editProfile = await clientService.editClient(
-        phone, email, direction, idDistrito, fullName, dni, reference);
+        phone, email, direction, idDistrito, fullName, reference);
     if (!editProfile) {
       _progressDialog.hide();
       mostrarAlerta(context, clientService.messageError);
     } else {
       _progressDialog.hide();
-      Navigator.pushReplacementNamed(context, 'profile');
+      Navigator.of(context).pop();
+      showSnackBar(context, "Usted actualizó su perfil correctamente");
     }
   }
 
@@ -171,16 +172,16 @@ class _EditProfileState extends State<EditProfile> {
       ),
       //cursorColor: Colors.redAccent.shade100,
       keyboardType: TextInputType.number,
-      onChanged: (String value) {
-        validate.changeDNI(value);
-      },
+      // onChanged: (String value) {
+      //   validate.changeDNI(value);
+      // },
       maxLength: 8,
       decoration: InputDecoration(
         contentPadding: EdgeInsets.symmetric(horizontal: 10),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
         ),
-        errorText: validate.dni.error,
+        //errorText: validate.dni.error,
         labelText: "Documento de Identidad(DNI)",
         prefixIconConstraints: BoxConstraints(minWidth: 30, minHeight: 25),
         prefixIcon: Icon(Icons.crop_7_5_rounded),

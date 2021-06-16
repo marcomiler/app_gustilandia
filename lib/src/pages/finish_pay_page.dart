@@ -211,8 +211,7 @@ class _FinishPayPageState extends State<FinishPayPage> {
   }
 
   Widget createCardPay(BuildContext context) {
-    final validationService =
-        Provider.of<ValidationFinishShop>(context, listen: false);
+    final validationService = Provider.of<ValidationFinishShop>(context);
     final size = MediaQuery.of(context).size;
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 5),
@@ -612,7 +611,7 @@ class _FinishPayPageState extends State<FinishPayPage> {
 
   void _addDirection(BuildContext context) {
     final validationDistritoService =
-        Provider.of<ValidationAddDistritoService>(context, listen: false);
+        Provider.of<ValidationAddDistritoService>(context);
     showDialog(
       barrierDismissible: true,
       context: context,

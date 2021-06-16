@@ -79,11 +79,11 @@ class ClienteService with ChangeNotifier {
 
   //Editar Datos del Cliente
   Future<bool> editClient(String phone, String email, String direction,
-      int idDistrito, String fullName, String dni, String reference) async {
+      int idDistrito, String fullName, String reference) async {
     final authData = {
       'nombreCompleto': fullName,
       'idDocumentoIdentidad': 1,
-      'numeroDocumentoIdentidad': dni,
+      'numeroDocumentoIdentidad': 0,
       'correo': email,
       "idDistrito": idDistrito,
       "celular": phone,

@@ -8,7 +8,7 @@ class ValidationEditClientService with ChangeNotifier {
   ValidationItem _direction = ValidationItem(null, null);
   ValidationItem _idDistrito = ValidationItem(null, null);
   ValidationItem _fullName = ValidationItem(null, null);
-  ValidationItem _dni = ValidationItem(null, null);
+  //ValidationItem _dni = ValidationItem(null, null);
   ValidationItem _reference = ValidationItem(null, null);
 
   //Getters
@@ -17,7 +17,7 @@ class ValidationEditClientService with ChangeNotifier {
   ValidationItem get direction => _direction;
   ValidationItem get idDistrito => _idDistrito;
   ValidationItem get fullName => _fullName;
-  ValidationItem get dni => _dni;
+  //ValidationItem get dni => _dni;
   ValidationItem get reference => _reference;
 
   bool get isValid {
@@ -26,7 +26,6 @@ class ValidationEditClientService with ChangeNotifier {
         _direction.value != null &&
         _idDistrito.value != null &&
         _fullName.value != null &&
-        _dni.value != null &&
         _reference.value != null) {
       return true;
     } else {
@@ -90,22 +89,22 @@ class ValidationEditClientService with ChangeNotifier {
     notifyListeners();
   }
 
-  void changeDNI(String value) {
-    final n = num.tryParse(value);
+  // void changeDNI(String value) {
+  //   final n = num.tryParse(value);
 
-    if (value.isEmpty) {
-      _dni = ValidationItem(null, "este campo es requerido");
-    } else if (value.length < 8) {
-      _dni = ValidationItem(null, "debe ingresar 8 digitos");
-    } else if (value.length > 8) {
-      _dni = ValidationItem(null, "solo se admiten 8 dígitos");
-    } else if (n == null) {
-      _dni = ValidationItem(null, "debe ingresar un formato correcto");
-    } else {
-      _dni = ValidationItem(value, null);
-    }
-    notifyListeners();
-  }
+  //   if (value.isEmpty) {
+  //     _dni = ValidationItem(null, "este campo es requerido");
+  //   } else if (value.length < 8) {
+  //     _dni = ValidationItem(null, "debe ingresar 8 digitos");
+  //   } else if (value.length > 8) {
+  //     _dni = ValidationItem(null, "solo se admiten 8 dígitos");
+  //   } else if (n == null) {
+  //     _dni = ValidationItem(null, "debe ingresar un formato correcto");
+  //   } else {
+  //     _dni = ValidationItem(value, null);
+  //   }
+  //   notifyListeners();
+  // }
 
   void changeReference(String value) {
     if (value.isEmpty || value.length == 0) {
