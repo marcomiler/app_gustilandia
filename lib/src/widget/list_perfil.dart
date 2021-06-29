@@ -7,43 +7,68 @@ class ListPerfil extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     Color color = Colors.redAccent.shade100;
 
     return ListView(
+      physics: NeverScrollableScrollPhysics(),
       children: <Widget>[
         Divider(),
-        _itemList('Editar Perfil', Icon(FontAwesomeIcons.solidEdit, color: color,), ()=> Navigator.pushNamed(context, 'edit_profile'), color, true),
+        _itemList(
+            'Editar Perfil',
+            Icon(
+              FontAwesomeIcons.solidEdit,
+              color: color,
+            ),
+            () => Navigator.pushNamed(context, 'edit_profile'),
+            color,
+            true),
         Divider(),
-        _itemList('Mis Ordenes', Icon(FontAwesomeIcons.shoppingBag, color: color,), ()=> Navigator.pushNamed(context, 'bagShoping'), color, true),
+        _itemList(
+            'Mis Ordenes',
+            Icon(
+              FontAwesomeIcons.shoppingBag,
+              color: color,
+            ),
+            () => Navigator.pushNamed(context, 'bagShoping'),
+            color,
+            true),
         Divider(),
-        _itemList('Acerca de Gustilandia', Icon(FontAwesomeIcons.infoCircle, color: color,), ()=> Navigator.pushNamed(context, 'about'), color, true),
+        _itemList(
+            'Acerca de Gustilandia',
+            Icon(
+              FontAwesomeIcons.infoCircle,
+              color: color,
+            ),
+            () => Navigator.pushNamed(context, 'about'),
+            color,
+            true),
         Divider(),
-        _itemList('Cerrar Sesión', Icon(FontAwesomeIcons.signOutAlt, color: color,),
-         (){
-           alertLogOut(context, '¿Está seguro que quiere cerrar sesión?');
-         }, 
-         color, false),
+        _itemList(
+            'Cerrar Sesión',
+            Icon(
+              FontAwesomeIcons.signOutAlt,
+              color: color,
+            ), () {
+          alertLogOut(context, '¿Está seguro que quiere cerrar sesión?');
+        }, color, false),
       ],
     );
   }
 
-
-  Widget _itemList(String text, Icon icon, VoidCallback callback, Color color, bool trail) {
-
+  Widget _itemList(
+      String text, Icon icon, VoidCallback callback, Color color, bool trail) {
     return ListTile(
       title: Text(
         text,
         style: TextStyle(
-          color: Color(0XFF4a503d),
-          fontWeight: FontWeight.bold,
-          fontSize: 16
-        ),
+            color: Color(0XFF4a503d),
+            fontWeight: FontWeight.bold,
+            fontSize: 16),
       ),
       leading: icon,
       trailing: (trail == true)
-      ? Icon(Icons.keyboard_arrow_right, color: color)
-      : null,
+          ? Icon(Icons.keyboard_arrow_right, color: color)
+          : null,
       onTap: callback,
     );
   }

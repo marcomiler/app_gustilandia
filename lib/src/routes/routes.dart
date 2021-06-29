@@ -1,3 +1,4 @@
+import 'package:app_gustilandia/src/pages/details_order.dart';
 import 'package:flutter/material.dart';
 
 import 'package:app_gustilandia/src/pages/about_app.dart';
@@ -20,6 +21,7 @@ Map<String, WidgetBuilder> getAplicationRoutes() {
     'tabs': (BuildContext context) => TabsPage(),
     'store': (BuildContext context) => TabStore(),
     'details': (BuildContext context) => DetailsProduct(),
+    'details-order': (BuildContext context) => DetailsOrder(),
     'shop': (BuildContext context) => TabShop(),
     'profile': (BuildContext context) => TabProfile(),
     'register': (BuildContext context) => RegisterPage(),
